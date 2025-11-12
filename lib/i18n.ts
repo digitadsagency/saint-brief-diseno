@@ -33,8 +33,6 @@ export interface Translations {
   step6Subtitle: string
   step7Title: string
   step7Subtitle: string
-  step8Title: string
-  step8Subtitle: string
   summaryTitle: string
   summarySubtitle: string
   
@@ -137,22 +135,20 @@ export const es: Translations = {
   finish: "Finalizar",
   
   // Steps
-  step1Title: "Datos básicos",
-  step1Subtitle: "Información personal y profesional",
-  step2Title: "Identidad y estilo",
-  step2Subtitle: "Cómo quieres ser percibido",
-  step3Title: "Procedimientos y negocio",
-  step3Subtitle: "Servicios y valor",
-  step4Title: "Paciente ideal",
-  step4Subtitle: "Tu público objetivo",
-  step5Title: "Diferenciadores",
-  step5Subtitle: "Qué te hace único",
-  step6Title: "Metas de marketing",
-  step6Subtitle: "Objetivos y referencias",
-  step7Title: "Storytelling & Creative Vault",
-  step7Subtitle: "Historias y contenido",
-  step8Title: "Historial de anuncios",
-  step8Subtitle: "Experiencia publicitaria",
+  step1Title: "Datos del cliente",
+  step1Subtitle: "Información de contacto",
+  step2Title: "Información general",
+  step2Subtitle: "Dimensiones y áreas",
+  step3Title: "Requerimientos especiales",
+  step3Subtitle: "Mobiliario específico",
+  step4Title: "Preferencias de mobiliario",
+  step4Subtitle: "Detalles de diseño",
+  step5Title: "Estilo, colores y percepción",
+  step5Subtitle: "Estética del proyecto",
+  step6Title: "Iluminación deseada",
+  step6Subtitle: "Preferencias de luz",
+  step7Title: "Presupuesto y alcance",
+  step7Subtitle: "Rango de inversión",
   summaryTitle: "Resumen",
   summarySubtitle: "Revisión final",
   
@@ -255,22 +251,20 @@ export const en: Translations = {
   finish: "Finish",
   
   // Steps
-  step1Title: "Basic Information",
-  step1Subtitle: "Personal and professional information",
-  step2Title: "Identity and Style",
-  step2Subtitle: "How you want to be perceived",
-  step3Title: "Procedures and Business",
-  step3Subtitle: "Services and value",
-  step4Title: "Ideal Patient",
-  step4Subtitle: "Your target audience",
-  step5Title: "Differentiators",
-  step5Subtitle: "What makes you unique",
-  step6Title: "Marketing Goals",
-  step6Subtitle: "Objectives and references",
-  step7Title: "Storytelling & Creative Vault",
-  step7Subtitle: "Stories and content",
-  step8Title: "Ad History",
-  step8Subtitle: "Advertising experience",
+  step1Title: "Client Data",
+  step1Subtitle: "Contact information",
+  step2Title: "General Information",
+  step2Subtitle: "Dimensions and areas",
+  step3Title: "Special Requirements",
+  step3Subtitle: "Specific furniture",
+  step4Title: "Furniture Preferences",
+  step4Subtitle: "Design details",
+  step5Title: "Style, Colors and Perception",
+  step5Subtitle: "Project aesthetics",
+  step6Title: "Desired Lighting",
+  step6Subtitle: "Light preferences",
+  step7Title: "Budget and Scope",
+  step7Subtitle: "Investment range",
   summaryTitle: "Summary",
   summarySubtitle: "Final review",
   

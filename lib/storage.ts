@@ -121,51 +121,48 @@ export function createEmptyBrief(): BrandBrief {
     timestamp: new Date(),
     step1: {
       fullName: "",
-      preferredName: "",
-      specialty: "",
-      cities: [],
-      yearsExperience: 0
+      commercialName: "",
+      phone: "",
+      socialMedia: ""
     },
     step2: {
-      perception: [],
-      whatNotAre: "",
-      philosophy: ""
+      squareMeters: "",
+      estimatedDate: "asap",
+      areasToWork: [],
+      otherArea: ""
     },
     step3: {
-      favoriteProcedures: [],
-      highValueServices: [],
-      accessibleServices: []
+      needsExamTable: false,
+      needsMedicalDesk: false,
+      needsSink: false,
+      needsChairs: false,
+      needsStorage: false,
+      otherElements: ""
     },
     step4: {
-      averageAge: "",
-      predominantGender: "ambos",
-      commonFears: []
+      deskType: "",
+      chairType: "",
+      storageAmount: "",
+      cabinetType: "",
+      furnitureHeight: "",
+      elementsToKeep: ""
     },
     step5: {
-      whatMakesDifferent: "",
-      keyTechnologies: []
+      desiredStyle: [],
+      otherStyle: "",
+      mainColors: "",
+      colorsToAvoid: "",
+      preferredMaterials: "",
+      favoriteTextures: "",
+      desiredPerception: "",
+      inspirationExamples: "",
+      logoOrIdentity: ""
     },
     step6: {
-      mainObjective: [],
-      monthlyNewConsultations: 0,
-      inspiringAccounts: []
+      lightingPreference: "neutral"
     },
     step7: {
-      whySpecialty: "",
-      markedCase: "",
-      commonPhrase: "",
-      fiveYearVision: "",
-      mythToDebunk: "",
-      frequentQuestions: [],
-      curiosityTopic: ""
-    },
-    step8: {
-      hasDoneAds: false,
-      platforms: [],
-      investmentAmount: "",
-      results: "",
-      bestFormats: [],
-      whatDidntWork: ""
+      budgetRange: "120-180k"
     },
     status: "draft"
   }

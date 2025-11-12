@@ -5,7 +5,7 @@ import { BrandBrief } from '@/lib/schemas'
 // Configuración de Google Sheets
 const GOOGLE_SHEETS_CONFIG = {
   SPREADSHEET_ID: process.env.NEXT_PUBLIC_GOOGLE_SHEETS_ID || '',
-  SHEET_NAME: 'Brand Briefs',
+  SHEET_NAME: 'Brief Saint Diseño',
 }
 
 // Función para preparar los datos en formato de fila para Google Sheets
@@ -16,53 +16,50 @@ function prepareDataForSheets(briefData: BrandBrief): string[] {
     // Timestamp
     timestamp,
     
-    // Paso 1 - Datos básicos
+    // Paso 1 - Datos del cliente
     briefData.step1?.fullName || '',
-    briefData.step1?.preferredName || '',
-    briefData.step1?.specialty || '',
-    (briefData.step1?.cities || []).join(', '),
-    briefData.step1?.yearsExperience?.toString() || '',
+    briefData.step1?.commercialName || '',
+    briefData.step1?.phone || '',
+    briefData.step1?.socialMedia || '',
     
-    // Paso 2 - Identidad y estilo
-    (briefData.step2?.perception || []).join(', '),
-    briefData.step2?.whatNotAre || '',
-    briefData.step2?.philosophy || '',
+    // Paso 2 - Información general
+    briefData.step2?.squareMeters || '',
+    briefData.step2?.estimatedDate || '',
+    (briefData.step2?.areasToWork || []).join(', '),
+    briefData.step2?.otherArea || '',
     
-    // Paso 3 - Procedimientos y negocio
-    (briefData.step3?.favoriteProcedures || []).join(', '),
-    (briefData.step3?.highValueServices || []).join(', '),
-    (briefData.step3?.accessibleServices || []).join(', '),
+    // Paso 3 - Requerimientos especiales
+    briefData.step3?.needsExamTable ? 'Sí' : 'No',
+    briefData.step3?.needsMedicalDesk ? 'Sí' : 'No',
+    briefData.step3?.needsSink ? 'Sí' : 'No',
+    briefData.step3?.needsChairs ? 'Sí' : 'No',
+    briefData.step3?.needsStorage ? 'Sí' : 'No',
+    briefData.step3?.otherElements || '',
     
-    // Paso 4 - Paciente ideal
-    briefData.step4?.averageAge || '',
-    briefData.step4?.predominantGender || '',
-    (briefData.step4?.commonFears || []).join(', '),
+    // Paso 4 - Preferencias de mobiliario
+    briefData.step4?.deskType || '',
+    briefData.step4?.chairType || '',
+    briefData.step4?.storageAmount || '',
+    briefData.step4?.cabinetType || '',
+    briefData.step4?.furnitureHeight || '',
+    briefData.step4?.elementsToKeep || '',
     
-    // Paso 5 - Diferenciadores
-    briefData.step5?.whatMakesDifferent || '',
-    (briefData.step5?.keyTechnologies || []).join(', '),
+    // Paso 5 - Estilo, colores y percepción
+    (briefData.step5?.desiredStyle || []).join(', '),
+    briefData.step5?.otherStyle || '',
+    briefData.step5?.mainColors || '',
+    briefData.step5?.colorsToAvoid || '',
+    briefData.step5?.preferredMaterials || '',
+    briefData.step5?.favoriteTextures || '',
+    briefData.step5?.desiredPerception || '',
+    briefData.step5?.inspirationExamples || '',
+    briefData.step5?.logoOrIdentity || '',
     
-    // Paso 6 - Metas de marketing
-    (briefData.step6?.mainObjective || []).join(', '),
-    briefData.step6?.monthlyNewConsultations?.toString() || '',
-    (briefData.step6?.inspiringAccounts || []).join(', '),
+    // Paso 6 - Iluminación deseada
+    briefData.step6?.lightingPreference || '',
     
-    // Paso 7 - Storytelling
-    briefData.step7?.whySpecialty || '',
-    briefData.step7?.markedCase || '',
-    briefData.step7?.commonPhrase || '',
-    briefData.step7?.fiveYearVision || '',
-    briefData.step7?.mythToDebunk || '',
-    (briefData.step7?.frequentQuestions || []).join(', '),
-    briefData.step7?.curiosityTopic || '',
-    
-    // Paso 8 - Historial de anuncios
-    briefData.step8?.hasDoneAds ? 'Sí' : 'No',
-    (briefData.step8?.platforms || []).join(', '),
-    briefData.step8?.investmentAmount || '',
-    briefData.step8?.results || '',
-    (briefData.step8?.bestFormats || []).join(', '),
-    briefData.step8?.whatDidntWork || ''
+    // Paso 7 - Presupuesto y alcance
+    briefData.step7?.budgetRange || ''
   ]
 }
 
@@ -103,13 +100,78 @@ export async function POST(request: NextRequest) {
 
     const sheets = google.sheets({ version: 'v4', auth })
     
+    // Verificar si la hoja existe y tiene headers
+    let rangeResponse
+    try {
+      rangeResponse = await sheets.spreadsheets.values.get({
+        spreadsheetId: GOOGLE_SHEETS_CONFIG.SPREADSHEET_ID,
+        range: `${GOOGLE_SHEETS_CONFIG.SHEET_NAME}!A1:AG1`,
+      })
+    } catch (error) {
+      // Si la hoja no existe, crearla
+      const spreadsheet = await sheets.spreadsheets.get({
+        spreadsheetId: GOOGLE_SHEETS_CONFIG.SPREADSHEET_ID,
+      })
+
+      const sheetExists = spreadsheet.data.sheets?.some(
+        sheet => sheet.properties?.title === GOOGLE_SHEETS_CONFIG.SHEET_NAME
+      )
+
+      if (!sheetExists) {
+        await sheets.spreadsheets.batchUpdate({
+          spreadsheetId: GOOGLE_SHEETS_CONFIG.SPREADSHEET_ID,
+          requestBody: {
+            requests: [
+              {
+                addSheet: {
+                  properties: {
+                    title: GOOGLE_SHEETS_CONFIG.SHEET_NAME,
+                  },
+                },
+              },
+            ],
+          },
+        })
+      }
+
+      // Crear los headers
+      const { getSheetHeaders } = await import('@/lib/googleSheets')
+      const headers = getSheetHeaders()
+      
+      await sheets.spreadsheets.values.update({
+        spreadsheetId: GOOGLE_SHEETS_CONFIG.SPREADSHEET_ID,
+        range: `${GOOGLE_SHEETS_CONFIG.SHEET_NAME}!A1`,
+        valueInputOption: 'RAW',
+        requestBody: {
+          values: [headers],
+        },
+      })
+
+      rangeResponse = { data: { values: [headers] } }
+    }
+
+    // Verificar si hay headers, si no, crearlos
+    if (!rangeResponse.data.values || rangeResponse.data.values.length === 0) {
+      const { getSheetHeaders } = await import('@/lib/googleSheets')
+      const headers = getSheetHeaders()
+      
+      await sheets.spreadsheets.values.update({
+        spreadsheetId: GOOGLE_SHEETS_CONFIG.SPREADSHEET_ID,
+        range: `${GOOGLE_SHEETS_CONFIG.SHEET_NAME}!A1`,
+        valueInputOption: 'RAW',
+        requestBody: {
+          values: [headers],
+        },
+      })
+    }
+    
     // Obtener el rango actual para encontrar la siguiente fila vacía
-    const rangeResponse = await sheets.spreadsheets.values.get({
+    const allRowsResponse = await sheets.spreadsheets.values.get({
       spreadsheetId: GOOGLE_SHEETS_CONFIG.SPREADSHEET_ID,
       range: `${GOOGLE_SHEETS_CONFIG.SHEET_NAME}!A:A`,
     })
 
-    const nextRow = (rangeResponse.data.values?.length || 0) + 1
+    const nextRow = (allRowsResponse.data.values?.length || 0) + 1
     const appendRange = `${GOOGLE_SHEETS_CONFIG.SHEET_NAME}!A${nextRow}`
     
     console.log(`Escribiendo en fila ${nextRow}`)

@@ -1,73 +1,68 @@
 import { z } from "zod"
 
-// Paso 1 - Datos básicos
+// Paso 1 - Datos del cliente
 export const basicInfoSchema = z.object({
   fullName: z.string().min(1, "El nombre completo es requerido"),
-  preferredName: z.string().min(1, "El nombre preferido es requerido"),
-  specialty: z.string().min(1, "La especialidad es requerida"),
-  cities: z.array(z.string()).min(1, "Debes especificar al menos una ciudad"),
-  yearsExperience: z.number().min(1, "Los años de experiencia son requeridos")
+  commercialName: z.string().optional(),
+  phone: z.string().min(1, "El teléfono es requerido"),
+  socialMedia: z.string().optional()
 })
 
-// Paso 2 - Identidad y estilo
-export const identityStyleSchema = z.object({
-  perception: z.array(z.enum([
-    "cercano_humano",
-    "elegante_aspiracional", 
-    "innovador_tecnologico",
-    "profesional_tecnico",
-    "casual_directo"
-  ])).min(3, "Debes elegir exactamente 3 opciones").max(3, "Debes elegir exactamente 3 opciones"),
-  whatNotAre: z.string().min(1, "Esta respuesta es requerida"),
-  philosophy: z.string().min(1, "Tu filosofía como médico es requerida")
+// Paso 2 - Información general
+export const generalInfoSchema = z.object({
+  squareMeters: z.string().min(1, "Los metros cuadrados son requeridos"),
+  estimatedDate: z.enum(["asap", "2-3_months", "3-6_months"], {
+    errorMap: () => ({ message: "Debes seleccionar una fecha estimada" })
+  }),
+  areasToWork: z.array(z.string()).min(1, "Debes seleccionar al menos un área a trabajar"),
+  otherArea: z.string().optional()
 })
 
-// Paso 3 - Procedimientos y negocio
-export const proceduresBusinessSchema = z.object({
-  favoriteProcedures: z.array(z.string()).min(2, "Debes especificar al menos 2 procedimientos favoritos").max(3, "Máximo 3 procedimientos favoritos"),
-  highValueServices: z.array(z.string()).min(1, "Debes especificar al menos un servicio de alto valor"),
-  accessibleServices: z.array(z.string()).min(1, "Debes especificar al menos un servicio accesible")
+// Paso 3 - Requerimientos especiales
+export const specialRequirementsSchema = z.object({
+  needsExamTable: z.boolean().default(false),
+  needsMedicalDesk: z.boolean().default(false),
+  needsSink: z.boolean().default(false),
+  needsChairs: z.boolean().default(false),
+  needsStorage: z.boolean().default(false),
+  otherElements: z.string().optional()
 })
 
-// Paso 4 - Paciente ideal
-export const idealPatientSchema = z.object({
-  averageAge: z.string().min(1, "La edad promedio es requerida"),
-  predominantGender: z.enum(["mujer", "hombre", "ambos"]),
-  commonFears: z.array(z.string()).min(1, "Debes especificar al menos un miedo común").max(3, "Máximo 3 miedos comunes")
+// Paso 4 - Preferencias de mobiliario
+export const furniturePreferencesSchema = z.object({
+  deskType: z.string().min(1, "El tipo de escritorio es requerido"),
+  chairType: z.string().min(1, "El tipo de sillas es requerido"),
+  storageAmount: z.string().min(1, "La cantidad de almacenamiento es requerida"),
+  cabinetType: z.string().min(1, "El tipo de gabinetes es requerido"),
+  furnitureHeight: z.string().min(1, "La altura o distribución es requerida"),
+  elementsToKeep: z.string().optional()
 })
 
-// Paso 5 - Diferenciadores
-export const differentiatorsSchema = z.object({
-  whatMakesDifferent: z.string().min(1, "Esta respuesta es requerida"),
-  keyTechnologies: z.array(z.string()).min(1, "Debes especificar al menos una tecnología o certificación")
+// Paso 5 - Estilo, colores y percepción
+export const styleColorsSchema = z.object({
+  desiredStyle: z.array(z.string()).min(1, "Debes seleccionar al menos un estilo"),
+  otherStyle: z.string().optional(),
+  mainColors: z.string().min(1, "Los colores principales son requeridos"),
+  colorsToAvoid: z.string().optional(),
+  preferredMaterials: z.string().optional(),
+  favoriteTextures: z.string().optional(),
+  desiredPerception: z.string().min(1, "La percepción deseada es requerida"),
+  inspirationExamples: z.string().optional(),
+  logoOrIdentity: z.string().optional()
 })
 
-// Paso 6 - Metas de marketing
-export const marketingGoalsSchema = z.object({
-  mainObjective: z.array(z.string()).min(1, "Debes seleccionar al menos un objetivo"),
-  monthlyNewConsultations: z.number().min(1, "El número de consultas mensuales es requerido"),
-  inspiringAccounts: z.array(z.string()).min(1, "Debes especificar al menos una cuenta que te inspire")
+// Paso 6 - Iluminación deseada
+export const lightingSchema = z.object({
+  lightingPreference: z.enum(["warm", "neutral", "cold"], {
+    errorMap: () => ({ message: "Debes seleccionar una preferencia de iluminación" })
+  })
 })
 
-// Paso 7 - Storytelling & Creative Vault
-export const storytellingSchema = z.object({
-  whySpecialty: z.string().min(1, "Esta historia es requerida"),
-  markedCase: z.string().min(1, "Este caso es requerido"),
-  commonPhrase: z.string().min(1, "Esta frase es requerida"),
-  fiveYearVision: z.string().min(1, "Tu visión a 5 años es requerida"),
-  mythToDebunk: z.string().min(1, "El mito a derribar es requerido"),
-  frequentQuestions: z.array(z.string()).min(1, "Debes especificar al menos una pregunta frecuente"),
-  curiosityTopic: z.string().min(1, "El tema que genera más curiosidad es requerido")
-})
-
-// Paso 8 - Historial de anuncios
-export const adHistorySchema = z.object({
-  hasDoneAds: z.boolean(),
-  platforms: z.array(z.string()).optional(),
-  investmentAmount: z.string().optional(),
-  results: z.string().optional(),
-  bestFormats: z.array(z.string()).optional(),
-  whatDidntWork: z.string().optional()
+// Paso 7 - Presupuesto y alcance
+export const budgetSchema = z.object({
+  budgetRange: z.enum(["120-180k", "180-250k", "250-330k", "330k+"], {
+    errorMap: () => ({ message: "Debes seleccionar un rango de presupuesto" })
+  })
 })
 
 // Esquema maestro
@@ -75,86 +70,80 @@ export const brandBriefSchema = z.object({
   id: z.string().uuid().optional(),
   timestamp: z.date().default(() => new Date()),
   step1: basicInfoSchema,
-  step2: identityStyleSchema,
-  step3: proceduresBusinessSchema,
-  step4: idealPatientSchema,
-  step5: differentiatorsSchema,
-  step6: marketingGoalsSchema,
-  step7: storytellingSchema,
-  step8: adHistorySchema,
+  step2: generalInfoSchema,
+  step3: specialRequirementsSchema,
+  step4: furniturePreferencesSchema,
+  step5: styleColorsSchema,
+  step6: lightingSchema,
+  step7: budgetSchema,
   status: z.enum(["draft", "completed"]).default("draft")
 })
 
 export type BrandBrief = z.infer<typeof brandBriefSchema>
 export type BasicInfo = z.infer<typeof basicInfoSchema>
-export type IdentityStyle = z.infer<typeof identityStyleSchema>
-export type ProceduresBusiness = z.infer<typeof proceduresBusinessSchema>
-export type IdealPatient = z.infer<typeof idealPatientSchema>
-export type Differentiators = z.infer<typeof differentiatorsSchema>
-export type MarketingGoals = z.infer<typeof marketingGoalsSchema>
-export type Storytelling = z.infer<typeof storytellingSchema>
-export type AdHistory = z.infer<typeof adHistorySchema>
+export type GeneralInfo = z.infer<typeof generalInfoSchema>
+export type SpecialRequirements = z.infer<typeof specialRequirementsSchema>
+export type FurniturePreferences = z.infer<typeof furniturePreferencesSchema>
+export type StyleColors = z.infer<typeof styleColorsSchema>
+export type Lighting = z.infer<typeof lightingSchema>
+export type Budget = z.infer<typeof budgetSchema>
 
 // Esquemas para validación por paso
 export const stepSchemas = {
   1: basicInfoSchema,
-  2: identityStyleSchema,
-  3: proceduresBusinessSchema,
-  4: idealPatientSchema,
-  5: differentiatorsSchema,
-  6: marketingGoalsSchema,
-  7: storytellingSchema,
-  8: adHistorySchema
+  2: generalInfoSchema,
+  3: specialRequirementsSchema,
+  4: furniturePreferencesSchema,
+  5: styleColorsSchema,
+  6: lightingSchema,
+  7: budgetSchema
 } as const
 
 // Datos de ejemplo para plantilla
 export const templateData: Partial<BrandBrief> = {
   step1: {
-    fullName: "Dr. María González",
-    preferredName: "Dra. María",
-    specialty: "Dermatología",
-    cities: ["Ciudad de México", "Guadalajara"],
-    yearsExperience: 8
+    fullName: "Cliente Ejemplo",
+    commercialName: "Espacio Diseño",
+    phone: "+52 55 1234 5678",
+    socialMedia: "@espaciodiseno"
   },
   step2: {
-    perception: ["cercano_humano", "profesional_tecnico", "innovador_tecnologico"],
-    whatNotAre: "No soy de dar resultados exagerados ni de prometer milagros",
-    philosophy: "La belleza natural se potencia con la ciencia y el cuidado personalizado"
+    squareMeters: "80",
+    estimatedDate: "2-3_months",
+    areasToWork: ["Recepción", "Sala de espera"],
+    otherArea: ""
   },
   step3: {
-    favoriteProcedures: ["Limpieza facial profunda", "Tratamiento anti-edad", "Dermatoscopía digital"],
-    highValueServices: ["Láser fraccionado", "Botox", "Rellenos de ácido hialurónico"],
-    accessibleServices: ["Consulta dermatológica", "Limpieza facial", "Tratamiento de acné"]
+    needsExamTable: false,
+    needsMedicalDesk: false,
+    needsSink: true,
+    needsChairs: true,
+    needsStorage: true,
+    otherElements: ""
   },
   step4: {
-    averageAge: "25-45",
-    predominantGender: "mujer",
-    commonFears: ["Dolor durante el procedimiento", "Resultados no naturales", "Efectos secundarios"]
+    deskType: "Escritorio moderno de madera",
+    chairType: "Sillas ergonómicas",
+    storageAmount: "Moderado",
+    cabinetType: "Gabinetes colgantes",
+    furnitureHeight: "Altura estándar",
+    elementsToKeep: ""
   },
   step5: {
-    whatMakesDifferent: "Uso de tecnología de vanguardia combinada con un enfoque personalizado y humano",
-    keyTechnologies: ["Dermatoscopía digital", "Láser fraccionado", "Certificación en medicina estética"]
+    desiredStyle: ["Minimalista", "Contemporáneo"],
+    otherStyle: "",
+    mainColors: "Blanco, gris, beige",
+    colorsToAvoid: "Colores muy oscuros",
+    preferredMaterials: "Madera clara, mármol",
+    favoriteTextures: "Mate, natural",
+    desiredPerception: "Limpio, moderno, cálido",
+    inspirationExamples: "https://pinterest.com/ejemplo",
+    logoOrIdentity: ""
   },
   step6: {
-    mainObjective: ["mas_consultas", "mejor_reputacion"],
-    monthlyNewConsultations: 50,
-    inspiringAccounts: ["@dermatologa_moderna", "@dr_skincare", "@medicina_estetica_mx"]
+    lightingPreference: "neutral"
   },
   step7: {
-    whySpecialty: "Elegí dermatología porque me apasiona ayudar a las personas a sentirse cómodas en su propia piel",
-    markedCase: "Una paciente de 35 años que recuperó su confianza después de un tratamiento de acné severo",
-    commonPhrase: "La piel es el reflejo de tu salud interior",
-    fiveYearVision: "Ser referente en dermatología estética en México y tener mi propia clínica",
-    mythToDebunk: "Que todos los tratamientos estéticos son peligrosos o antinaturales",
-    frequentQuestions: ["¿Duele el procedimiento?", "¿Cuánto tiempo duran los resultados?", "¿Hay efectos secundarios?"],
-    curiosityTopic: "Los tratamientos de rejuvenecimiento facial sin cirugía"
-  },
-  step8: {
-    hasDoneAds: true,
-    platforms: ["Meta Ads", "Google Ads"],
-    investmentAmount: "15,000 MXN mensuales",
-    results: "Generaba 20-25 consultas nuevas por mes",
-    bestFormats: ["Videos", "Reels", "Carruseles"],
-    whatDidntWork: "Anuncios muy técnicos sin storytelling personal"
+    budgetRange: "180-250k"
   }
 }

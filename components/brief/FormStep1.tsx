@@ -8,8 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { X, Plus, User, Stethoscope, MapPin, Calendar } from "lucide-react"
+import { User, Phone, Instagram } from "lucide-react"
 import { basicInfoSchema, type BasicInfo } from "@/lib/schemas"
 import { type Language, getTranslation } from "@/lib/i18n"
 
@@ -22,37 +21,15 @@ interface FormStep1Props {
 }
 
 export function FormStep1({ data, language, onSubmit, onNext, onBack }: FormStep1Props) {
-  const [cities, setCities] = React.useState<string[]>(data.cities || [])
-  const [newCity, setNewCity] = React.useState("")
-
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors, isValid }
   } = useForm<BasicInfo>({
     resolver: zodResolver(basicInfoSchema),
     defaultValues: data,
     mode: "onChange"
   })
-
-  const watchedValues = watch()
-
-  React.useEffect(() => {
-    setValue("cities", cities)
-  }, [cities, setValue])
-
-  const addCity = () => {
-    if (newCity.trim() && !cities.includes(newCity.trim())) {
-      setCities(prev => [...prev, newCity.trim()])
-      setNewCity("")
-    }
-  }
-
-  const removeCity = (city: string) => {
-    setCities(prev => prev.filter(c => c !== city))
-  }
 
   const onFormSubmit = (formData: BasicInfo) => {
     onSubmit(formData)
@@ -70,7 +47,7 @@ export function FormStep1({ data, language, onSubmit, onNext, onBack }: FormStep
         <CardHeader className="bg-gradient-to-r from-[#CADCFF] to-[#C1FFDD]">
           <CardTitle className="text-black flex items-center gap-2">
             <User className="h-5 w-5" />
-            {getTranslation(language, "step1Title")}
+            Datos del cliente
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-8">
@@ -78,12 +55,12 @@ export function FormStep1({ data, language, onSubmit, onNext, onBack }: FormStep
             {/* Nombre completo */}
             <div className="space-y-2">
               <Label htmlFor="fullName" className="text-base font-medium">
-                {getTranslation(language, "fullName")} *
+                Nombre completo del cliente *
               </Label>
               <Input
                 id="fullName"
                 {...register("fullName")}
-                placeholder="Ej: Dr. María González Pérez"
+                placeholder="Ej: María González Pérez"
                 className="w-full"
               />
               {errors.fullName && (
@@ -91,103 +68,48 @@ export function FormStep1({ data, language, onSubmit, onNext, onBack }: FormStep
               )}
             </div>
 
-            {/* Nombre preferido */}
+            {/* Nombre comercial */}
             <div className="space-y-2">
-              <Label htmlFor="preferredName" className="text-base font-medium">
-                {getTranslation(language, "preferredName")} *
+              <Label htmlFor="commercialName" className="text-base font-medium">
+                Nombre comercial (si aplica)
               </Label>
               <Input
-                id="preferredName"
-                {...register("preferredName")}
-                placeholder="Ej: Dra. María"
+                id="commercialName"
+                {...register("commercialName")}
+                placeholder="Ej: Espacio Diseño"
                 className="w-full"
               />
-              {errors.preferredName && (
-                <p className="text-sm text-red-500">{errors.preferredName.message}</p>
+            </div>
+
+            {/* Teléfono / WhatsApp */}
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="text-base font-medium flex items-center gap-2">
+                <Phone className="h-4 w-4" />
+                Teléfono / WhatsApp *
+              </Label>
+              <Input
+                id="phone"
+                {...register("phone")}
+                placeholder="Ej: +52 55 1234 5678"
+                className="w-full"
+              />
+              {errors.phone && (
+                <p className="text-sm text-red-500">{errors.phone.message}</p>
               )}
             </div>
 
-            {/* Especialidad */}
+            {/* Redes sociales */}
             <div className="space-y-2">
-              <Label htmlFor="specialty" className="text-base font-medium flex items-center gap-2">
-                <Stethoscope className="h-4 w-4" />
-                {getTranslation(language, "specialty")} *
+              <Label htmlFor="socialMedia" className="text-base font-medium flex items-center gap-2">
+                <Instagram className="h-4 w-4" />
+                Redes sociales (si aplica)
               </Label>
               <Input
-                id="specialty"
-                {...register("specialty")}
-                placeholder="Ej: Dermatología, Cardiología, Ginecología"
+                id="socialMedia"
+                {...register("socialMedia")}
+                placeholder="Ej: @espaciodiseno"
                 className="w-full"
               />
-              {errors.specialty && (
-                <p className="text-sm text-red-500">{errors.specialty.message}</p>
-              )}
-            </div>
-
-            {/* Ciudades */}
-            <div className="space-y-4">
-              <Label className="text-base font-medium flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                {getTranslation(language, "cities")} *
-              </Label>
-              
-              {/* Agregar ciudad */}
-              <div className="flex gap-2">
-                <Input
-                  value={newCity}
-                  onChange={(e) => setNewCity(e.target.value)}
-                  placeholder="Agregar ciudad"
-                  onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addCity())}
-                  className="flex-1"
-                />
-                <Button type="button" onClick={addCity} size="icon">
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-
-              {/* Lista de ciudades */}
-              <div className="space-y-2">
-                <Label className="text-sm text-muted-foreground">Ciudades agregadas:</Label>
-                <div className="flex flex-wrap gap-2">
-                  {cities.map((city, index) => (
-                    <Badge key={index} variant="secondary" className="flex items-center gap-1">
-                      {city}
-                      <X 
-                        className="h-3 w-3 cursor-pointer" 
-                        onClick={() => removeCity(city)}
-                      />
-                    </Badge>
-                  ))}
-                </div>
-                {cities.length === 0 && (
-                  <p className="text-sm text-muted-foreground text-center py-4">
-                    No hay ciudades agregadas. Agrega al menos una para continuar.
-                  </p>
-                )}
-              </div>
-              {errors.cities && (
-                <p className="text-sm text-red-500">{errors.cities.message}</p>
-              )}
-            </div>
-
-            {/* Años de experiencia */}
-            <div className="space-y-2">
-              <Label htmlFor="yearsExperience" className="text-base font-medium flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                {getTranslation(language, "yearsExperience")} *
-              </Label>
-              <Input
-                id="yearsExperience"
-                type="number"
-                min="0"
-                max="50"
-                {...register("yearsExperience", { valueAsNumber: true })}
-                placeholder="Ej: 8"
-                className="w-full"
-              />
-              {errors.yearsExperience && (
-                <p className="text-sm text-red-500">{errors.yearsExperience.message}</p>
-              )}
             </div>
 
             {/* Botones de Navegación */}

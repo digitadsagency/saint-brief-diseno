@@ -11,7 +11,7 @@ function createEmailHTML(briefData: BrandBrief): string {
     <html>
     <head>
       <meta charset="utf-8">
-      <title>Nuevo Brand Brief Completado</title>
+      <title>Nuevo Brief Creativo de Diseño de Interiores</title>
       <style>
         body { font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #2c3e50; margin: 0; padding: 0; background: #ffffff; }
         .container { max-width: 800px; margin: 0 auto; padding: 20px; }
@@ -29,15 +29,13 @@ function createEmailHTML(briefData: BrandBrief): string {
         .stat-card { background: #ffffff; padding: 20px; border: 1px solid #CADCFF; text-align: center; }
         .stat-number { font-size: 20px; font-weight: 600; color: #2c3e50; }
         .stat-label { font-size: 12px; color: #6c757d; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .quote { background: linear-gradient(135deg, #f8f9fa 0%, #e8f4fd 100%); padding: 20px; border-left: 4px solid #CADCFF; font-style: italic; color: #495057; margin: 15px 0; }
-        .icon { font-size: 16px; margin-right: 8px; }
         .divider { height: 1px; background: linear-gradient(90deg, #CADCFF 0%, #C1FFDD 100%); margin: 20px 0; }
       </style>
     </head>
     <body>
       <div class="container">
         <div class="header">
-          <h1>NUEVO BRAND BRIEF COMPLETADO</h1>
+          <h1>NUEVO BRIEF CREATIVO DE DISEÑO DE INTERIORES</h1>
           <p>Fecha: ${timestamp}</p>
         </div>
 
@@ -49,77 +47,74 @@ function createEmailHTML(briefData: BrandBrief): string {
               <div class="stat-label">Nombre Completo</div>
             </div>
             <div class="stat-card">
-              <div class="stat-number">${briefData.step1?.specialty || 'N/A'}</div>
-              <div class="stat-label">Especialidad</div>
+              <div class="stat-number">${briefData.step2?.squareMeters || 'N/A'} m²</div>
+              <div class="stat-label">Metros Cuadrados</div>
             </div>
             <div class="stat-card">
-              <div class="stat-number">${briefData.step1?.yearsExperience || 'N/A'}</div>
-              <div class="stat-label">Años de Experiencia</div>
+              <div class="stat-number">${briefData.step7?.budgetRange || 'N/A'}</div>
+              <div class="stat-label">Rango de Presupuesto</div>
             </div>
           </div>
           <div class="divider"></div>
-          <p><strong>Nombre Preferido:</strong> ${briefData.step1?.preferredName || 'No especificado'}</p>
-          <p><strong>Ciudades:</strong> ${(briefData.step1?.cities || []).join(', ') || 'No especificadas'}</p>
+          <p><strong>Nombre Comercial:</strong> ${briefData.step1?.commercialName || 'No especificado'}</p>
+          <p><strong>Teléfono:</strong> ${briefData.step1?.phone || 'No especificado'}</p>
+          <p><strong>Redes Sociales:</strong> ${briefData.step1?.socialMedia || 'No especificadas'}</p>
         </div>
 
         <div class="section">
-          <h2>IDENTIDAD Y ESTILO</h2>
-          <div class="field"><strong>Percepción Deseada:</strong> ${(briefData.step2?.perception || []).map(p => `<span class="badge">${p.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>`).join(' ')}</div>
-          <div class="field"><strong>Qué NO Es:</strong> ${briefData.step2?.whatNotAre || 'No especificado'}</div>
-          ${briefData.step2?.philosophy ? `<div class="quote"><strong>Filosofía:</strong> "${briefData.step2.philosophy}"</div>` : ''}
+          <h2>INFORMACIÓN GENERAL</h2>
+          <div class="field"><strong>Metros Cuadrados:</strong> ${briefData.step2?.squareMeters || 'No especificado'} m²</div>
+          <div class="field"><strong>Fecha Estimada:</strong> ${briefData.step2?.estimatedDate === 'asap' ? 'Lo más pronto posible' : briefData.step2?.estimatedDate === '2-3_months' ? 'De 2 a 3 meses' : briefData.step2?.estimatedDate === '3-6_months' ? 'De 3 a 6 meses' : 'No especificada'}</div>
+          <div class="field"><strong>Áreas a Trabajar:</strong> ${(briefData.step2?.areasToWork || []).join(', ') || 'No especificadas'}</div>
+          ${briefData.step2?.otherArea ? `<div class="field"><strong>Otra Área:</strong> ${briefData.step2.otherArea}</div>` : ''}
         </div>
 
         <div class="section">
-          <h2>PROCEDIMIENTOS Y NEGOCIO</h2>
-          <div class="field"><strong>Procedimientos Favoritos:</strong> ${(briefData.step3?.favoriteProcedures || []).join(', ') || 'No especificados'}</div>
-          <div class="field"><strong>Servicios de Alto Valor:</strong> ${(briefData.step3?.highValueServices || []).join(', ') || 'No especificados'}</div>
-          <div class="field"><strong>Servicios Accesibles:</strong> ${(briefData.step3?.accessibleServices || []).join(', ') || 'No especificados'}</div>
+          <h2>REQUERIMIENTOS ESPECIALES</h2>
+          <div class="field"><strong>Camilla(s):</strong> ${briefData.step3?.needsExamTable ? 'Sí' : 'No'}</div>
+          <div class="field"><strong>Escritorio Médico:</strong> ${briefData.step3?.needsMedicalDesk ? 'Sí' : 'No'}</div>
+          <div class="field"><strong>Mueble para Lavabo:</strong> ${briefData.step3?.needsSink ? 'Sí' : 'No'}</div>
+          <div class="field"><strong>Sillas de Atención:</strong> ${briefData.step3?.needsChairs ? 'Sí' : 'No'}</div>
+          <div class="field"><strong>Almacenamiento:</strong> ${briefData.step3?.needsStorage ? 'Sí' : 'No'}</div>
+          ${briefData.step3?.otherElements ? `<div class="field"><strong>Otros Elementos:</strong> ${briefData.step3.otherElements}</div>` : ''}
         </div>
 
         <div class="section">
-          <h2>PACIENTE IDEAL</h2>
-          <div class="field"><strong>Edad Promedio:</strong> ${briefData.step4?.averageAge || 'No especificada'}</div>
-          <div class="field"><strong>Género Predominante:</strong> ${briefData.step4?.predominantGender || 'No especificado'}</div>
-          <div class="field"><strong>Miedos Comunes:</strong> ${(briefData.step4?.commonFears || []).join(', ') || 'No especificados'}</div>
+          <h2>PREFERENCIAS DE MOBILIARIO</h2>
+          <div class="field"><strong>Tipo de Escritorio:</strong> ${briefData.step4?.deskType || 'No especificado'}</div>
+          <div class="field"><strong>Tipo de Sillas:</strong> ${briefData.step4?.chairType || 'No especificado'}</div>
+          <div class="field"><strong>Cantidad de Almacenamiento:</strong> ${briefData.step4?.storageAmount || 'No especificado'}</div>
+          <div class="field"><strong>Tipo de Gabinetes:</strong> ${briefData.step4?.cabinetType || 'No especificado'}</div>
+          <div class="field"><strong>Altura o Distribución:</strong> ${briefData.step4?.furnitureHeight || 'No especificado'}</div>
+          ${briefData.step4?.elementsToKeep ? `<div class="field"><strong>Elementos a Conservar:</strong> ${briefData.step4.elementsToKeep}</div>` : ''}
         </div>
 
         <div class="section">
-          <h2>DIFERENCIADORES</h2>
-          <div class="field"><strong>Qué Lo Hace Diferente:</strong> ${briefData.step5?.whatMakesDifferent || 'No especificado'}</div>
-          <div class="field"><strong>Tecnologías Clave:</strong> ${(briefData.step5?.keyTechnologies || []).join(', ') || 'No especificadas'}</div>
+          <h2>ESTILO, COLORES Y PERCEPCIÓN</h2>
+          <div class="field"><strong>Estilo Deseado:</strong> ${(briefData.step5?.desiredStyle || []).map(s => `<span class="badge">${s}</span>`).join(' ')}</div>
+          ${briefData.step5?.otherStyle ? `<div class="field"><strong>Otro Estilo:</strong> ${briefData.step5.otherStyle}</div>` : ''}
+          <div class="field"><strong>Colores Principales:</strong> ${briefData.step5?.mainColors || 'No especificados'}</div>
+          ${briefData.step5?.colorsToAvoid ? `<div class="field"><strong>Colores a Evitar:</strong> ${briefData.step5.colorsToAvoid}</div>` : ''}
+          ${briefData.step5?.preferredMaterials ? `<div class="field"><strong>Materiales Preferidos:</strong> ${briefData.step5.preferredMaterials}</div>` : ''}
+          ${briefData.step5?.favoriteTextures ? `<div class="field"><strong>Texturas Favoritas:</strong> ${briefData.step5.favoriteTextures}</div>` : ''}
+          <div class="field"><strong>Percepción Deseada:</strong> ${briefData.step5?.desiredPerception || 'No especificada'}</div>
+          ${briefData.step5?.inspirationExamples ? `<div class="field"><strong>Ejemplos de Inspiración:</strong> ${briefData.step5.inspirationExamples}</div>` : ''}
+          ${briefData.step5?.logoOrIdentity ? `<div class="field"><strong>Logo o Identidad:</strong> ${briefData.step5.logoOrIdentity}</div>` : ''}
         </div>
 
         <div class="section">
-          <h2>METAS DE MARKETING</h2>
-          <div class="field"><strong>Objetivos Principales:</strong> ${(briefData.step6?.mainObjective || []).map(o => `<span class="badge">${o.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>`).join(' ')}</div>
-          <div class="field"><strong>Consultas Nuevas Mensuales Deseadas:</strong> ${briefData.step6?.monthlyNewConsultations || 'No especificado'}</div>
-          <div class="field"><strong>Cuentas Inspiradoras:</strong> ${(briefData.step6?.inspiringAccounts || []).join(', ') || 'No especificadas'}</div>
+          <h2>ILUMINACIÓN DESEADA</h2>
+          <div class="field"><strong>Preferencia:</strong> ${briefData.step6?.lightingPreference === 'warm' ? 'Luz cálida' : briefData.step6?.lightingPreference === 'neutral' ? 'Luz neutra' : briefData.step6?.lightingPreference === 'cold' ? 'Luz fría' : 'No especificada'}</div>
         </div>
 
         <div class="section">
-          <h2>STORYTELLING & CREATIVE VAULT</h2>
-          <div class="field"><strong>Por Qué Eligió su Especialidad:</strong> ${briefData.step7?.whySpecialty || 'No especificado'}</div>
-          <div class="field"><strong>Caso que Lo Marcó:</strong> ${briefData.step7?.markedCase || 'No especificado'}</div>
-          ${briefData.step7?.commonPhrase ? `<div class="quote"><strong>Frase Común:</strong> "${briefData.step7.commonPhrase}"</div>` : ''}
-          <div class="field"><strong>Visión a 5 Años:</strong> ${briefData.step7?.fiveYearVision || 'No especificada'}</div>
-          <div class="field"><strong>Mito a Derribar:</strong> ${briefData.step7?.mythToDebunk || 'No especificado'}</div>
-          <div class="field"><strong>Preguntas Frecuentes:</strong> ${(briefData.step7?.frequentQuestions || []).join(', ') || 'No especificadas'}</div>
-          <div class="field"><strong>Tema de Curiosidad:</strong> ${briefData.step7?.curiosityTopic || 'No especificado'}</div>
-        </div>
-
-        <div class="section">
-          <h2>HISTORIAL DE ANUNCIOS</h2>
-          <div class="field"><strong>Ha Hecho Anuncios:</strong> ${briefData.step8?.hasDoneAds ? 'Sí' : 'No'}</div>
-          <div class="field"><strong>Plataformas Usadas:</strong> ${(briefData.step8?.platforms || []).join(', ') || 'No especificadas'}</div>
-          <div class="field"><strong>Inversión Mensual:</strong> ${briefData.step8?.investmentAmount || 'No especificada'}</div>
-          <div class="field"><strong>Resultados Obtenidos:</strong> ${briefData.step8?.results || 'No especificados'}</div>
-          <div class="field"><strong>Formatos que Funcionaron:</strong> ${(briefData.step8?.bestFormats || []).join(', ') || 'No especificados'}</div>
-          <div class="field"><strong>Qué No Funcionó:</strong> ${briefData.step8?.whatDidntWork || 'No especificado'}</div>
+          <h2>PRESUPUESTO Y ALCANCE</h2>
+          <div class="field"><strong>Rango de Presupuesto:</strong> ${briefData.step7?.budgetRange === '120-180k' ? '$120,000 – $180,000' : briefData.step7?.budgetRange === '180-250k' ? '$180,000 – $250,000' : briefData.step7?.budgetRange === '250-330k' ? '$250,000 – $330,000' : briefData.step7?.budgetRange === '330k+' ? '+$330,000' : 'No especificado'}</div>
         </div>
 
         <div class="footer">
-          <p><strong>SAINT Agency</strong> - Brand Brief Tool</p>
-          <p>Este correo fue generado automáticamente cuando se completó un nuevo brand brief.</p>
+          <p><strong>SAINT Agency</strong> - Brief Creativo de Diseño de Interiores</p>
+          <p>Este correo fue generado automáticamente cuando se completó un nuevo brief creativo.</p>
         </div>
       </div>
     </body>
@@ -132,60 +127,59 @@ function createEmailText(briefData: BrandBrief): string {
   const timestamp = new Date().toLocaleString('es-ES')
   
   return `
-🎉 NUEVO BRAND BRIEF COMPLETADO
+NUEVO BRIEF CREATIVO DE DISEÑO DE INTERIORES
 Fecha: ${timestamp}
 
-📋 RESUMEN DEL CLIENTE:
+RESUMEN DEL CLIENTE:
 - Nombre: ${briefData.step1?.fullName || 'No especificado'}
-- Nombre Preferido: ${briefData.step1?.preferredName || 'No especificado'}
-- Especialidad: ${briefData.step1?.specialty || 'No especificada'}
-- Ciudades: ${(briefData.step1?.cities || []).join(', ') || 'No especificadas'}
-- Años de Experiencia: ${briefData.step1?.yearsExperience || 'No especificado'}
+- Nombre Comercial: ${briefData.step1?.commercialName || 'No especificado'}
+- Teléfono: ${briefData.step1?.phone || 'No especificado'}
+- Redes Sociales: ${briefData.step1?.socialMedia || 'No especificadas'}
+- Metros Cuadrados: ${briefData.step2?.squareMeters || 'No especificado'} m²
+- Rango de Presupuesto: ${briefData.step7?.budgetRange || 'No especificado'}
 
-🎨 IDENTIDAD Y ESTILO:
-- Percepción Deseada: ${(briefData.step2?.perception || []).map(p => p.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())).join(', ') || 'No especificada'}
-- Qué NO Es: ${briefData.step2?.whatNotAre || 'No especificado'}
-- Filosofía: ${briefData.step2?.philosophy || 'No especificada'}
+INFORMACIÓN GENERAL:
+- Metros Cuadrados: ${briefData.step2?.squareMeters || 'No especificado'} m²
+- Fecha Estimada: ${briefData.step2?.estimatedDate === 'asap' ? 'Lo más pronto posible' : briefData.step2?.estimatedDate === '2-3_months' ? 'De 2 a 3 meses' : briefData.step2?.estimatedDate === '3-6_months' ? 'De 3 a 6 meses' : 'No especificada'}
+- Áreas a Trabajar: ${(briefData.step2?.areasToWork || []).join(', ') || 'No especificadas'}
+${briefData.step2?.otherArea ? `- Otra Área: ${briefData.step2.otherArea}` : ''}
 
-💼 PROCEDIMIENTOS Y NEGOCIO:
-- Procedimientos Favoritos: ${(briefData.step3?.favoriteProcedures || []).join(', ') || 'No especificados'}
-- Servicios de Alto Valor: ${(briefData.step3?.highValueServices || []).join(', ') || 'No especificados'}
-- Servicios Accesibles: ${(briefData.step3?.accessibleServices || []).join(', ') || 'No especificados'}
+REQUERIMIENTOS ESPECIALES:
+- Camilla(s): ${briefData.step3?.needsExamTable ? 'Sí' : 'No'}
+- Escritorio Médico: ${briefData.step3?.needsMedicalDesk ? 'Sí' : 'No'}
+- Mueble para Lavabo: ${briefData.step3?.needsSink ? 'Sí' : 'No'}
+- Sillas de Atención: ${briefData.step3?.needsChairs ? 'Sí' : 'No'}
+- Almacenamiento: ${briefData.step3?.needsStorage ? 'Sí' : 'No'}
+${briefData.step3?.otherElements ? `- Otros Elementos: ${briefData.step3.otherElements}` : ''}
 
-👤 PACIENTE IDEAL:
-- Edad Promedio: ${briefData.step4?.averageAge || 'No especificada'}
-- Género Predominante: ${briefData.step4?.predominantGender || 'No especificado'}
-- Miedos Comunes: ${(briefData.step4?.commonFears || []).join(', ') || 'No especificados'}
+PREFERENCIAS DE MOBILIARIO:
+- Tipo de Escritorio: ${briefData.step4?.deskType || 'No especificado'}
+- Tipo de Sillas: ${briefData.step4?.chairType || 'No especificado'}
+- Cantidad de Almacenamiento: ${briefData.step4?.storageAmount || 'No especificado'}
+- Tipo de Gabinetes: ${briefData.step4?.cabinetType || 'No especificado'}
+- Altura o Distribución: ${briefData.step4?.furnitureHeight || 'No especificado'}
+${briefData.step4?.elementsToKeep ? `- Elementos a Conservar: ${briefData.step4.elementsToKeep}` : ''}
 
-🏆 DIFERENCIADORES:
-- Qué Lo Hace Diferente: ${briefData.step5?.whatMakesDifferent || 'No especificado'}
-- Tecnologías Clave: ${(briefData.step5?.keyTechnologies || []).join(', ') || 'No especificadas'}
+ESTILO, COLORES Y PERCEPCIÓN:
+- Estilo Deseado: ${(briefData.step5?.desiredStyle || []).join(', ') || 'No especificado'}
+${briefData.step5?.otherStyle ? `- Otro Estilo: ${briefData.step5.otherStyle}` : ''}
+- Colores Principales: ${briefData.step5?.mainColors || 'No especificados'}
+${briefData.step5?.colorsToAvoid ? `- Colores a Evitar: ${briefData.step5.colorsToAvoid}` : ''}
+${briefData.step5?.preferredMaterials ? `- Materiales Preferidos: ${briefData.step5.preferredMaterials}` : ''}
+${briefData.step5?.favoriteTextures ? `- Texturas Favoritas: ${briefData.step5.favoriteTextures}` : ''}
+- Percepción Deseada: ${briefData.step5?.desiredPerception || 'No especificada'}
+${briefData.step5?.inspirationExamples ? `- Ejemplos de Inspiración: ${briefData.step5.inspirationExamples}` : ''}
+${briefData.step5?.logoOrIdentity ? `- Logo o Identidad: ${briefData.step5.logoOrIdentity}` : ''}
 
-🚀 METAS DE MARKETING:
-- Objetivos Principales: ${(briefData.step6?.mainObjective || []).map(o => o.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())).join(', ') || 'No especificados'}
-- Consultas Nuevas Mensuales Deseadas: ${briefData.step6?.monthlyNewConsultations || 'No especificado'}
-- Cuentas Inspiradoras: ${(briefData.step6?.inspiringAccounts || []).join(', ') || 'No especificadas'}
+ILUMINACIÓN DESEADA:
+- Preferencia: ${briefData.step6?.lightingPreference === 'warm' ? 'Luz cálida' : briefData.step6?.lightingPreference === 'neutral' ? 'Luz neutra' : briefData.step6?.lightingPreference === 'cold' ? 'Luz fría' : 'No especificada'}
 
-📖 STORYTELLING & CREATIVE VAULT:
-- Por Qué Eligió su Especialidad: ${briefData.step7?.whySpecialty || 'No especificado'}
-- Caso que Lo Marcó: ${briefData.step7?.markedCase || 'No especificado'}
-- Frase Común: "${briefData.step7?.commonPhrase || 'No especificada'}"
-- Visión a 5 Años: ${briefData.step7?.fiveYearVision || 'No especificada'}
-- Mito a Derribar: ${briefData.step7?.mythToDebunk || 'No especificado'}
-- Preguntas Frecuentes: ${(briefData.step7?.frequentQuestions || []).join(', ') || 'No especificadas'}
-- Tema de Curiosidad: ${briefData.step7?.curiosityTopic || 'No especificado'}
-
-📊 HISTORIAL DE ANUNCIOS:
-- Ha Hecho Anuncios: ${briefData.step8?.hasDoneAds ? 'Sí' : 'No'}
-- Plataformas Usadas: ${(briefData.step8?.platforms || []).join(', ') || 'No especificadas'}
-- Inversión Mensual: ${briefData.step8?.investmentAmount || 'No especificada'}
-- Resultados Obtenidos: ${briefData.step8?.results || 'No especificados'}
-- Formatos que Funcionaron: ${(briefData.step8?.bestFormats || []).join(', ') || 'No especificados'}
-- Qué No Funcionó: ${briefData.step8?.whatDidntWork || 'No especificado'}
+PRESUPUESTO Y ALCANCE:
+- Rango de Presupuesto: ${briefData.step7?.budgetRange === '120-180k' ? '$120,000 – $180,000' : briefData.step7?.budgetRange === '180-250k' ? '$180,000 – $250,000' : briefData.step7?.budgetRange === '250-330k' ? '$250,000 – $330,000' : briefData.step7?.budgetRange === '330k+' ? '+$330,000' : 'No especificado'}
 
 ---
-SAINT Agency - Brand Brief Tool
-Este correo fue generado automáticamente cuando se completó un nuevo brand brief.
+SAINT Agency - Brief Creativo de Diseño de Interiores
+Este correo fue generado automáticamente cuando se completó un nuevo brief creativo.
   `
 }
 
@@ -215,7 +209,7 @@ export async function POST(request: NextRequest) {
     const mailOptions = {
       from: process.env.GMAIL_EMAIL,
       to: 'contacto@saintagency.com.mx, paolaloya16@gmail.com', // Enviar a ambos correos
-      subject: `🎉 Nuevo Brand Brief - ${briefData.step1?.fullName || 'Cliente'} (${briefData.step1?.specialty || 'Especialidad'})`,
+      subject: `Nuevo Brief Creativo - ${briefData.step1?.fullName || 'Cliente'} (${briefData.step2?.squareMeters || 'N/A'} m²)`,
       text: createEmailText(briefData),
       html: createEmailHTML(briefData)
     }

@@ -16,51 +16,48 @@ export function PreviewPane({ data, language }: PreviewPaneProps) {
     return {
       step1: {
         fullName: data.step1.fullName,
-        preferredName: data.step1.preferredName,
-        specialty: data.step1.specialty,
-        cities: data.step1.cities,
-        yearsExperience: data.step1.yearsExperience
+        commercialName: data.step1.commercialName,
+        phone: data.step1.phone,
+        socialMedia: data.step1.socialMedia
       },
       step2: {
-        perception: data.step2.perception,
-        whatNotAre: data.step2.whatNotAre,
-        philosophy: data.step2.philosophy
+        squareMeters: data.step2.squareMeters,
+        estimatedDate: data.step2.estimatedDate,
+        areasToWork: data.step2.areasToWork,
+        otherArea: data.step2.otherArea
       },
       step3: {
-        favoriteProcedures: data.step3.favoriteProcedures,
-        highValueServices: data.step3.highValueServices,
-        accessibleServices: data.step3.accessibleServices
+        needsExamTable: data.step3.needsExamTable,
+        needsMedicalDesk: data.step3.needsMedicalDesk,
+        needsSink: data.step3.needsSink,
+        needsChairs: data.step3.needsChairs,
+        needsStorage: data.step3.needsStorage,
+        otherElements: data.step3.otherElements
       },
       step4: {
-        averageAge: data.step4.averageAge,
-        predominantGender: data.step4.predominantGender,
-        commonFears: data.step4.commonFears
+        deskType: data.step4.deskType,
+        chairType: data.step4.chairType,
+        storageAmount: data.step4.storageAmount,
+        cabinetType: data.step4.cabinetType,
+        furnitureHeight: data.step4.furnitureHeight,
+        elementsToKeep: data.step4.elementsToKeep
       },
       step5: {
-        whatMakesDifferent: data.step5.whatMakesDifferent,
-        keyTechnologies: data.step5.keyTechnologies
+        desiredStyle: data.step5.desiredStyle,
+        otherStyle: data.step5.otherStyle,
+        mainColors: data.step5.mainColors,
+        colorsToAvoid: data.step5.colorsToAvoid,
+        preferredMaterials: data.step5.preferredMaterials,
+        favoriteTextures: data.step5.favoriteTextures,
+        desiredPerception: data.step5.desiredPerception,
+        inspirationExamples: data.step5.inspirationExamples,
+        logoOrIdentity: data.step5.logoOrIdentity
       },
       step6: {
-        mainObjective: data.step6.mainObjective,
-        monthlyNewConsultations: data.step6.monthlyNewConsultations,
-        inspiringAccounts: data.step6.inspiringAccounts
+        lightingPreference: data.step6.lightingPreference
       },
       step7: {
-        whySpecialty: data.step7.whySpecialty,
-        markedCase: data.step7.markedCase,
-        commonPhrase: data.step7.commonPhrase,
-        fiveYearVision: data.step7.fiveYearVision,
-        mythToDebunk: data.step7.mythToDebunk,
-        frequentQuestions: data.step7.frequentQuestions,
-        curiosityTopic: data.step7.curiosityTopic
-      },
-      step8: {
-        hasDoneAds: data.step8.hasDoneAds,
-        platforms: data.step8.platforms,
-        investmentAmount: data.step8.investmentAmount,
-        results: data.step8.results,
-        bestFormats: data.step8.bestFormats,
-        whatDidntWork: data.step8.whatDidntWork
+        budgetRange: data.step7.budgetRange
       }
     }
   }
@@ -79,93 +76,77 @@ export function PreviewPane({ data, language }: PreviewPaneProps) {
         {/* Información básica */}
         {previewData.step1.fullName && (
           <div className="space-y-2">
-            <h4 className="font-semibold text-sm text-gray-700">Información básica</h4>
+            <h4 className="font-semibold text-sm text-gray-700">Datos del cliente</h4>
             <div className="space-y-1">
               <p className="text-sm"><strong>Nombre:</strong> {previewData.step1.fullName}</p>
-              <p className="text-sm"><strong>Preferido:</strong> {previewData.step1.preferredName}</p>
-              <p className="text-sm"><strong>Especialidad:</strong> {previewData.step1.specialty}</p>
-              {previewData.step1.cities.length > 0 && (
-                <p className="text-sm"><strong>Ciudades:</strong> {previewData.step1.cities.join(", ")}</p>
+              {previewData.step1.commercialName && (
+                <p className="text-sm"><strong>Nombre Comercial:</strong> {previewData.step1.commercialName}</p>
               )}
-              {previewData.step1.yearsExperience > 0 && (
-                <p className="text-sm"><strong>Experiencia:</strong> {previewData.step1.yearsExperience} años</p>
+              {previewData.step1.phone && (
+                <p className="text-sm"><strong>Teléfono:</strong> {previewData.step1.phone}</p>
+              )}
+              {previewData.step1.socialMedia && (
+                <p className="text-sm"><strong>Redes Sociales:</strong> {previewData.step1.socialMedia}</p>
               )}
             </div>
           </div>
         )}
 
-        {/* Identidad y estilo */}
-        {previewData.step2.perception.length > 0 && (
+        {/* Información general */}
+        {previewData.step2.squareMeters && (
           <div className="space-y-2">
-            <h4 className="font-semibold text-sm text-gray-700">Identidad</h4>
+            <h4 className="font-semibold text-sm text-gray-700">Información general</h4>
+            <div className="space-y-1">
+              <p className="text-sm"><strong>Metros Cuadrados:</strong> {previewData.step2.squareMeters} m²</p>
+              {previewData.step2.estimatedDate && (
+                <p className="text-sm"><strong>Fecha Estimada:</strong> {
+                  previewData.step2.estimatedDate === 'asap' ? 'Lo más pronto posible' :
+                  previewData.step2.estimatedDate === '2-3_months' ? 'De 2 a 3 meses' :
+                  previewData.step2.estimatedDate === '3-6_months' ? 'De 3 a 6 meses' : previewData.step2.estimatedDate
+                }</p>
+              )}
+              {previewData.step2.areasToWork.length > 0 && (
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {previewData.step2.areasToWork.map((area, index) => (
+                    <Badge key={index} className="text-xs bg-[#CADCFF] text-black border-[#CADCFF]">
+                      {area}
+                    </Badge>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Estilo deseado */}
+        {previewData.step5.desiredStyle.length > 0 && (
+          <div className="space-y-2">
+            <h4 className="font-semibold text-sm text-gray-700">Estilo deseado</h4>
             <div className="flex flex-wrap gap-1">
-              {previewData.step2.perception.map((perception, index) => (
+              {previewData.step5.desiredStyle.map((style, index) => (
                 <Badge key={index} className="text-xs bg-[#C1FFDD] text-black border-[#C1FFDD]">
-                  {getTranslation(language, perception as any)}
+                  {style}
                 </Badge>
               ))}
             </div>
-          </div>
-        )}
-
-        {/* Procedimientos favoritos */}
-        {previewData.step3.favoriteProcedures.length > 0 && (
-          <div className="space-y-2">
-            <h4 className="font-semibold text-sm text-gray-700">Procedimientos favoritos</h4>
-            <div className="flex flex-wrap gap-1">
-              {previewData.step3.favoriteProcedures.map((procedure, index) => (
-                <Badge key={index} className="text-xs bg-[#CADCFF] text-black border-[#CADCFF]">
-                  {procedure}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Paciente ideal */}
-        {(previewData.step4.averageAge || previewData.step4.predominantGender) && (
-          <div className="space-y-2">
-            <h4 className="font-semibold text-sm text-gray-700">Paciente ideal</h4>
-            <div className="space-y-1">
-              {previewData.step4.averageAge && (
-                <p className="text-sm"><strong>Edad:</strong> {previewData.step4.averageAge}</p>
-              )}
-              {previewData.step4.predominantGender && (
-                <p className="text-sm"><strong>Género:</strong> {getTranslation(language, previewData.step4.predominantGender as any)}</p>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Metas de marketing */}
-        {previewData.step6.mainObjective && (
-          <div className="space-y-2">
-            <h4 className="font-semibold text-sm text-gray-700">Metas de marketing</h4>
-            <div className="space-y-1">
-              <p className="text-sm"><strong>Objetivo:</strong> {getTranslation(language, previewData.step6.mainObjective as any)}</p>
-              {previewData.step6.monthlyNewConsultations > 0 && (
-                <p className="text-sm"><strong>Consultas/mes:</strong> {previewData.step6.monthlyNewConsultations}</p>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Historial de anuncios */}
-        {previewData.step8.hasDoneAds !== undefined && (
-          <div className="space-y-2">
-            <h4 className="font-semibold text-sm text-gray-700">Historial de anuncios</h4>
-            <p className="text-sm">
-              <strong>Experiencia:</strong> {previewData.step8.hasDoneAds ? "Sí" : "No"}
-            </p>
-            {previewData.step8.platforms && previewData.step8.platforms.length > 0 && (
-              <div className="flex flex-wrap gap-1">
-                {previewData.step8.platforms.map((platform, index) => (
-                  <Badge key={index} className="text-xs bg-[#C1FFDD] text-black border-[#C1FFDD]">
-                    {platform}
-                  </Badge>
-                ))}
-              </div>
+            {previewData.step5.mainColors && (
+              <p className="text-sm"><strong>Colores:</strong> {previewData.step5.mainColors}</p>
             )}
+          </div>
+        )}
+
+        {/* Presupuesto - Solo mostrar si el brief está completado */}
+        {data.status === "completed" && previewData.step7.budgetRange && (
+          <div className="space-y-2">
+            <h4 className="font-semibold text-sm text-gray-700">Presupuesto</h4>
+            <p className="text-sm">
+              <strong>Rango:</strong> {
+                previewData.step7.budgetRange === '120-180k' ? '$120,000 – $180,000' :
+                previewData.step7.budgetRange === '180-250k' ? '$180,000 – $250,000' :
+                previewData.step7.budgetRange === '250-330k' ? '$250,000 – $330,000' :
+                previewData.step7.budgetRange === '330k+' ? '+$330,000' : previewData.step7.budgetRange
+              }
+            </p>
           </div>
         )}
 
@@ -181,7 +162,7 @@ export function PreviewPane({ data, language }: PreviewPaneProps) {
             <div className="flex items-center justify-between text-sm mt-1">
               <span className="text-gray-600">Última actualización:</span>
               <span className="text-gray-500">
-                {data.timestamp.toLocaleDateString(language === "es" ? "es-ES" : "en-US")}
+                {new Date(data.timestamp).toLocaleDateString(language === "es" ? "es-ES" : "en-US")}
               </span>
             </div>
           )}

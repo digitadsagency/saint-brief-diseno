@@ -59,7 +59,7 @@ export default function HomePage() {
                 </h1>
                 
                 <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  Queremos entender quién eres como médico y qué te mueve. Cada respuesta nos ayudará a crear una estrategia que realmente se parezca a ti.
+                  Queremos entender tu visión y necesidades para tu proyecto de diseño. Cada respuesta nos ayudará a crear un diseño que realmente se parezca a ti y a tu espacio.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -116,7 +116,7 @@ export default function HomePage() {
               <div className="text-sm text-muted-foreground text-center md:text-right">
                 <p>© 2024 SAINT Agency. Todos los derechos reservados.</p>
                 <p className="mt-1">
-                  Herramienta profesional para el sector salud.
+                  Herramienta profesional para diseño de interiores.
                 </p>
               </div>
             </div>

@@ -25,18 +25,16 @@ import FormStep4 from "@/components/brief/FormStep4"
 import FormStep5 from "@/components/brief/FormStep5"
 import FormStep6 from "@/components/brief/FormStep6"
 import FormStep7 from "@/components/brief/FormStep7"
-import FormStep8 from "@/components/brief/FormStep8"
 import { ExportButtons } from "@/components/brief/ExportButtons"
 import { 
   type BrandBrief, 
   type BasicInfo, 
-  type IdentityStyle,
-  type ProceduresBusiness,
-  type IdealPatient,
-  type Differentiators,
-  type MarketingGoals,
-  type Storytelling,
-  type AdHistory,
+  type GeneralInfo,
+  type SpecialRequirements,
+  type FurniturePreferences,
+  type StyleColors,
+  type Lighting,
+  type Budget,
   brandBriefSchema,
   templateData 
 } from "@/lib/schemas"
@@ -53,13 +51,13 @@ import Link from "next/link"
 import Image from "next/image"
 
 /*
- * SAINT Brand Brief - Herramienta de Brief Médico
+ * SAINT Brand Brief - Herramienta de Brief Creativo para Diseño de Interiores
  * 
  * Formulario interactivo para recopilar información detallada
- * sobre médicos y clínicas para estrategias de marketing médico.
+ * sobre proyectos de diseño de interiores.
  */
 
-const TOTAL_STEPS = 8
+const TOTAL_STEPS = 7
 
 export default function BrandBriefPage() {
   const [currentStep, setCurrentStep] = React.useState(1)
@@ -229,19 +227,9 @@ export default function BrandBriefPage() {
         return (
           <FormStep7
             data={briefData.step7}
-            language={language}
-            onSubmit={(data) => handleStepSubmit(data, 7)}
-            onNext={handleNext}
-            onBack={handleBack}
-          />
-        )
-      case 8:
-        return (
-          <FormStep8
-            data={briefData.step8}
             briefData={briefData}
             language={language}
-            onSubmit={(data) => handleStepSubmit(data, 8)}
+            onSubmit={(data) => handleStepSubmit(data, 7)}
             onNext={handleNext}
             onBack={handleBack}
           />

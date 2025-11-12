@@ -18,8 +18,7 @@ export function Stepper({ currentStep, totalSteps, language }: StepperProps) {
     { number: 4, title: "step4Title" },
     { number: 5, title: "step5Title" },
     { number: 6, title: "step6Title" },
-    { number: 7, title: "step7Title" },
-    { number: 8, title: "step8Title" }
+    { number: 7, title: "step7Title" }
   ]
 
   const progress = (currentStep / totalSteps) * 100
