@@ -103,72 +103,79 @@ export async function exportToPDF(
 // Función para generar texto del Scope Draft
 export function generateScopeDraft(data: BrandBrief, language: "es" | "en" = "es"): string {
   const t = language === "es" ? {
-    title: "DRAFT DE ALCANCE - BRAND BRIEF MÉDICO",
+    title: "DRAFT DE ALCANCE - BRIEF CREATIVO DE DISEÑO DE INTERIORES",
     client: "Cliente",
-    specialty: "Especialidad",
-    objectives: "Objetivos",
-    services: "Servicios a Promover",
-    channels: "Canales Prioritarios",
-    budget: "Presupuesto Mensual",
+    commercialName: "Nombre Comercial",
+    phone: "Teléfono",
+    squareMeters: "Metros Cuadrados",
+    areas: "Áreas a Trabajar",
+    style: "Estilo Deseado",
+    colors: "Colores Principales",
+    budget: "Rango de Presupuesto",
     timeline: "Timeline",
     deliverables: "Entregables",
     assumptions: "Supuestos",
     exclusions: "Exclusiones",
-    medicalReview: "Revisión Médica",
-    compliance: "Cumplimiento",
     contact: "Contacto"
   } : {
-    title: "SCOPE DRAFT - MEDICAL BRAND BRIEF",
+    title: "SCOPE DRAFT - INTERIOR DESIGN CREATIVE BRIEF",
     client: "Client",
-    specialty: "Specialty",
-    objectives: "Objectives",
-    services: "Services to Promote",
-    channels: "Priority Channels",
-    budget: "Monthly Budget",
+    commercialName: "Commercial Name",
+    phone: "Phone",
+    squareMeters: "Square Meters",
+    areas: "Areas to Work",
+    style: "Desired Style",
+    colors: "Main Colors",
+    budget: "Budget Range",
     timeline: "Timeline",
     deliverables: "Deliverables",
     assumptions: "Assumptions",
     exclusions: "Exclusions",
-    medicalReview: "Medical Review",
-    compliance: "Compliance",
     contact: "Contact"
   }
+  
+  const budgetRangeText = data.step7?.budgetRange === '120-180k' ? '$120,000 – $180,000' :
+    data.step7?.budgetRange === '180-250k' ? '$180,000 – $250,000' :
+    data.step7?.budgetRange === '250-330k' ? '$250,000 – $330,000' :
+    data.step7?.budgetRange === '330k+' ? '+$330,000' : 'No especificado'
   
   const scopeDraft = `
 ${t.title}
 =====================================
 
 ${t.client}: ${data.step1.fullName}
-${t.specialty}: ${data.step1.specialty}
-${t.objectives}: ${data.step2.perception?.join(", ") || "No especificado"}
-${t.services}: ${data.step3.favoriteProcedures?.join(", ") || "No especificado"}
-${t.channels}: ${data.step5.keyTechnologies?.join(", ") || "No especificado"}
-${t.budget}: ${data.step6.monthlyNewConsultations || "No especificado"}
+${t.commercialName}: ${data.step1.commercialName || "No especificado"}
+${t.phone}: ${data.step1.phone || "No especificado"}
+${t.squareMeters}: ${data.step2.squareMeters || "No especificado"} m²
+${t.areas}: ${data.step2.areasToWork?.join(", ") || "No especificado"}
+${t.style}: ${data.step5.desiredStyle?.join(", ") || "No especificado"}
+${t.colors}: ${data.step5.mainColors || "No especificado"}
+${t.budget}: ${budgetRangeText}
 
 ${t.deliverables}:
-- Estrategia de marca médica
-- Plan de contenido educativo
-- Campañas publicitarias segmentadas
-- Optimización de conversión
-- Reportes de rendimiento
+- Diseño conceptual del espacio
+- Planos y layouts
+- Especificaciones de mobiliario
+- Paleta de colores y materiales
+- Plan de iluminación
+- Presupuesto detallado
 
 ${t.assumptions}:
-- Cliente proporcionará contenido médico aprobado
-- Acceso a métricas de la clínica
-- Colaboración del equipo médico para revisión
-- Presupuesto aprobado según rango especificado
+- Cliente proporcionará medidas exactas del espacio
+- Acceso al espacio para toma de medidas
+- Aprobación de presupuesto según rango especificado
+- Disponibilidad para reuniones de revisión
 
 ${t.exclusions}:
-- Desarrollo de sitio web (si no existe)
-- Fotografía profesional (salvo especificado)
-- Producción de video (salvo especificado)
-- Gestión de redes sociales (solo estrategia)
-
+- Obra y construcción (solo diseño)
+- Mobiliario y decoración (solo especificaciones)
+- Permisos y trámites legales
+- Instalaciones eléctricas y plomería (solo diseño)
 
 ${t.contact}:
-Marketing: ${data.step6.inspiringAccounts?.join(", ") || "No especificado"}
-Administración: ${data.step6.mainObjective || "No especificado"}
-Compliance: ${data.step6.monthlyNewConsultations || "No especificado"}
+Cliente: ${data.step1.fullName}
+Teléfono: ${data.step1.phone || "No especificado"}
+Redes Sociales: ${data.step1.socialMedia || "No especificado"}
 
 ---
 Generado el: ${new Date().toLocaleDateString()}
@@ -234,73 +241,48 @@ export function formatDataForPreview(data: BrandBrief, language: "es" | "en" = "
     status: data.status,
     step1: {
       fullName: data.step1.fullName,
-      preferredName: data.step1.preferredName,
-      specialty: data.step1.specialty,
-      cities: data.step1.cities,
-      yearsExperience: data.step1.yearsExperience,
-      // Campos adicionales no disponibles en el nuevo esquema
-      // subSpecialties: data.step1.subSpecialties,
-      // certifications: data.step1.certifications,
-      // website: data.step1.currentChannels?.website,
-      // doctoralia: data.step1.currentChannels?.doctoralia,
-      // googleBusiness: data.step1.currentChannels?.googleBusiness,
-      // socialMedia: data.step1.currentChannels?.socialMedia
+      commercialName: data.step1.commercialName,
+      phone: data.step1.phone,
+      socialMedia: data.step1.socialMedia
     },
     step2: {
-      perception: data.step2.perception,
-      whatNotAre: data.step2.whatNotAre,
-      philosophy: data.step2.philosophy
-      // Campos adicionales no disponibles en el nuevo esquema
-      // monthlyAppointments: data.step2.kpis?.monthlyAppointments,
-      // monthlyBudget: data.step2.monthlyBudget,
-      // servicePriority: data.step2.servicePriority
+      squareMeters: data.step2.squareMeters,
+      estimatedDate: data.step2.estimatedDate,
+      areasToWork: data.step2.areasToWork,
+      otherArea: data.step2.otherArea
     },
     step3: {
-      favoriteProcedures: data.step3.favoriteProcedures,
-      highValueServices: data.step3.highValueServices,
-      accessibleServices: data.step3.accessibleServices
-      // Campos adicionales no disponibles en el nuevo esquema
-      // ageRange: data.step3.segments?.ageRange,
-      // gender: data.step3.segments?.gender,
-      // socioeconomicLevel: data.step3.segments?.socioeconomicLevel,
-      // insuranceType: data.step3.segments?.insuranceType,
-      // painPoints: data.step3.painPoints,
-      // motivations: data.step3.motivations,
-      // competitiveAdvantage: data.step3.competitiveAdvantage,
-      // competitors: data.step3.competitors,
-      // keywords: data.step3.keywords
+      needsExamTable: data.step3.needsExamTable,
+      needsMedicalDesk: data.step3.needsMedicalDesk,
+      needsSink: data.step3.needsSink,
+      needsChairs: data.step3.needsChairs,
+      needsStorage: data.step3.needsStorage,
+      otherElements: data.step3.otherElements
     },
     step4: {
-      averageAge: data.step4.averageAge,
-      predominantGender: data.step4.predominantGender,
-      commonFears: data.step4.commonFears
-      // Campos adicionales no disponibles en el nuevo esquema
-      // services: data.step4.services,
-      // leadFlow: data.step4.leadFlow
+      deskType: data.step4.deskType,
+      chairType: data.step4.chairType,
+      storageAmount: data.step4.storageAmount,
+      cabinetType: data.step4.cabinetType,
+      furnitureHeight: data.step4.furnitureHeight,
+      elementsToKeep: data.step4.elementsToKeep
     },
     step5: {
-      whatMakesDifferent: data.step5.whatMakesDifferent,
-      keyTechnologies: data.step5.keyTechnologies
-      // Campos adicionales no disponibles en el nuevo esquema
-      // contentTypes: data.step5.contentTypes,
-      // productionCapability: data.step5.productionCapability,
-      // recordingPermissions: data.step5.recordingPermissions,
-      // toneOfVoice: data.step5.toneOfVoice,
-      // contentPillars: data.step5.contentPillars,
-      // priorityChannels: data.step5.priorityChannels,
-      // contentFrequency: data.step5.contentFrequency,
-      // editorialFlow: data.step5.editorialFlow
+      desiredStyle: data.step5.desiredStyle,
+      otherStyle: data.step5.otherStyle,
+      mainColors: data.step5.mainColors,
+      colorsToAvoid: data.step5.colorsToAvoid,
+      preferredMaterials: data.step5.preferredMaterials,
+      favoriteTextures: data.step5.favoriteTextures,
+      desiredPerception: data.step5.desiredPerception,
+      inspirationExamples: data.step5.inspirationExamples,
+      logoOrIdentity: data.step5.logoOrIdentity
     },
     step6: {
-      mainObjective: data.step6.mainObjective,
-      monthlyNewConsultations: data.step6.monthlyNewConsultations,
-      inspiringAccounts: data.step6.inspiringAccounts
-      // Campos adicionales no disponibles en el nuevo esquema
-      // schedules: data.step6.schedules,
-      // agendaOperations: data.step6.agendaOperations,
-      // clinicalMetrics: data.step6.clinicalMetrics,
-      // access: data.step6.access,
-      // keyContacts: data.step6.keyContacts
+      lightingPreference: data.step6.lightingPreference
+    },
+    step7: {
+      budgetRange: data.step7.budgetRange
     }
   }
 }
