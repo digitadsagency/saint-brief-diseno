@@ -51,7 +51,6 @@ function prepareDataForSheets(briefData: BrandBrief): string[] {
     briefData.step5?.otherStyle || '',
     briefData.step5?.mainColors || '',
     briefData.step5?.colorsToAvoid || '',
-    briefData.step5?.preferredMaterials || '',
     briefData.step5?.favoriteTextures || '',
     briefData.step5?.desiredPerception || '',
     briefData.step5?.inspirationExamples || '',
