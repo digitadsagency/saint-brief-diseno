@@ -149,7 +149,6 @@ export function createEmptyBrief(): BrandBrief {
       otherStyle: "",
       mainColors: "",
       colorsToAvoid: "",
-      preferredMaterials: "",
       favoriteTextures: "",
       desiredPerception: "",
       inspirationExamples: "",
