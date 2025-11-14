@@ -25,10 +25,9 @@ const areaOptions = [
   "Recepción",
   "Sala de espera",
   "Consultorio médico",
-  "Procedimientos",
+  "Sala de exploración",
   "Baño",
-  "Oficina administrativa",
-  "Almacenaje"
+  "Oficina administrativa"
 ]
 
 export function FormStep2({ data, language, onSubmit, onNext, onBack }: FormStep2Props) {
