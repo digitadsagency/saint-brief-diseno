@@ -21,10 +21,20 @@ interface FormStep4Props {
   onBack: () => void
 }
 
+const deskTypeOptions = [
+  { value: "en_escuadra", label: "En escuadra (esquinado)" },
+  { value: "en_l", label: "En L" },
+  { value: "recto", label: "Recto" },
+  { value: "giratorio", label: "Giratorio" },
+  { value: "prefiero_propuesta", label: "Prefiero que ustedes me propongan" }
+]
+
 export default function FormStep4({ data, language, onSubmit, onNext, onBack }: FormStep4Props) {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors, isValid }
   } = useForm<FurniturePreferences>({
     resolver: zodResolver(furniturePreferencesSchema),
@@ -54,20 +64,45 @@ export default function FormStep4({ data, language, onSubmit, onNext, onBack }: 
         <CardContent className="pt-8">
           <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6">
             {/* Tipo de escritorio */}
-            <div className="space-y-2">
-              <Label htmlFor="deskType" className="text-base font-medium">
-                Tipo de escritorio deseado (forma, tamaño, materiales, nivel de privacidad) *
+            <div className="space-y-4">
+              <Label className="text-base font-medium">
+                Tipo de escritorio *
               </Label>
-              <Textarea
-                id="deskType"
-                {...register("deskType")}
-                placeholder="Ej: Escritorio moderno de madera, tamaño mediano, con privacidad"
-                rows={3}
-                className="w-full"
-              />
+              <div className="space-y-2">
+                {deskTypeOptions.map((option) => (
+                  <div key={option.value} className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      id={option.value}
+                      name="deskType"
+                      value={option.value}
+                      checked={watch("deskType") === option.value}
+                      onChange={(e) => setValue("deskType", e.target.value as any)}
+                      className="rounded"
+                    />
+                    <Label htmlFor={option.value} className="font-normal cursor-pointer">
+                      {option.label}
+                    </Label>
+                  </div>
+                ))}
+              </div>
               {errors.deskType && (
                 <p className="text-sm text-red-500">{errors.deskType.message}</p>
               )}
+
+              {/* Otras especificaciones */}
+              <div className="space-y-2 mt-4">
+                <Label htmlFor="deskTypeSpecs" className="text-base font-medium">
+                  Otras especificaciones:
+                </Label>
+                <Textarea
+                  id="deskTypeSpecs"
+                  {...register("deskTypeSpecs")}
+                  placeholder="Ej. Necesito un escritorio con privacidad, con cajones…"
+                  rows={2}
+                  className="w-full"
+                />
+              </div>
             </div>
 
             {/* Tipo de sillas */}

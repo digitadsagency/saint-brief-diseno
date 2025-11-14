@@ -18,19 +18,17 @@ export const generalInfoSchema = z.object({
   otherArea: z.string().optional()
 })
 
-// Paso 3 - Requerimientos especiales
+// Paso 3 - Equipo médico a considerar
 export const specialRequirementsSchema = z.object({
-  needsExamTable: z.boolean().default(false),
-  needsMedicalDesk: z.boolean().default(false),
-  needsSink: z.boolean().default(false),
-  needsChairs: z.boolean().default(false),
-  needsStorage: z.boolean().default(false),
-  otherElements: z.string().optional()
+  medicalEquipment: z.string().optional()
 })
 
 // Paso 4 - Preferencias de mobiliario
 export const furniturePreferencesSchema = z.object({
-  deskType: z.string().min(1, "El tipo de escritorio es requerido"),
+  deskType: z.enum(["en_escuadra", "en_l", "recto", "giratorio", "prefiero_propuesta"], {
+    errorMap: () => ({ message: "Debes seleccionar un tipo de escritorio" })
+  }),
+  deskTypeSpecs: z.string().optional(),
   chairType: z.string().min(1, "El tipo de sillas es requerido"),
   storageAmount: z.string().min(1, "La cantidad de almacenamiento es requerida"),
   cabinetType: z.string().min(1, "El tipo de gabinetes es requerido"),
@@ -114,15 +112,11 @@ export const templateData: Partial<BrandBrief> = {
     otherArea: ""
   },
   step3: {
-    needsExamTable: false,
-    needsMedicalDesk: false,
-    needsSink: true,
-    needsChairs: true,
-    needsStorage: true,
-    otherElements: ""
+    medicalEquipment: "Televisión, camilla, mesa de Mayo, sillas de exploración, ultrasonido…"
   },
   step4: {
-    deskType: "Escritorio moderno de madera",
+    deskType: "en_l",
+    deskTypeSpecs: "Necesito un escritorio con privacidad, con cajones…",
     chairType: "Sillas ergonómicas",
     storageAmount: "Moderado",
     cabinetType: "Gabinetes colgantes",

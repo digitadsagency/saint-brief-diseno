@@ -70,18 +70,21 @@ function createEmailHTML(briefData: BrandBrief): string {
         </div>
 
         <div class="section">
-          <h2>REQUERIMIENTOS ESPECIALES</h2>
-          <div class="field"><strong>Camilla(s):</strong> ${briefData.step3?.needsExamTable ? 'Sí' : 'No'}</div>
-          <div class="field"><strong>Escritorio Médico:</strong> ${briefData.step3?.needsMedicalDesk ? 'Sí' : 'No'}</div>
-          <div class="field"><strong>Mueble para Lavabo:</strong> ${briefData.step3?.needsSink ? 'Sí' : 'No'}</div>
-          <div class="field"><strong>Sillas de Atención:</strong> ${briefData.step3?.needsChairs ? 'Sí' : 'No'}</div>
-          <div class="field"><strong>Almacenamiento:</strong> ${briefData.step3?.needsStorage ? 'Sí' : 'No'}</div>
-          ${briefData.step3?.otherElements ? `<div class="field"><strong>Otros Elementos:</strong> ${briefData.step3.otherElements}</div>` : ''}
+          <h2>EQUIPO MÉDICO A CONSIDERAR</h2>
+          <div class="field">${briefData.step3?.medicalEquipment || 'No especificado'}</div>
         </div>
 
         <div class="section">
           <h2>PREFERENCIAS DE MOBILIARIO</h2>
-          <div class="field"><strong>Tipo de Escritorio:</strong> ${briefData.step4?.deskType || 'No especificado'}</div>
+          <div class="field"><strong>Tipo de Escritorio:</strong> ${
+            briefData.step4?.deskType === 'en_escuadra' ? 'En escuadra (esquinado)' :
+            briefData.step4?.deskType === 'en_l' ? 'En L' :
+            briefData.step4?.deskType === 'recto' ? 'Recto' :
+            briefData.step4?.deskType === 'giratorio' ? 'Giratorio' :
+            briefData.step4?.deskType === 'prefiero_propuesta' ? 'Prefiero que ustedes me propongan' :
+            briefData.step4?.deskType || 'No especificado'
+          }</div>
+          ${briefData.step4?.deskTypeSpecs ? `<div class="field"><strong>Otras Especificaciones:</strong> ${briefData.step4.deskTypeSpecs}</div>` : ''}
           <div class="field"><strong>Tipo de Sillas:</strong> ${briefData.step4?.chairType || 'No especificado'}</div>
           <div class="field"><strong>Cantidad de Almacenamiento:</strong> ${briefData.step4?.storageAmount || 'No especificado'}</div>
           <div class="field"><strong>Tipo de Gabinetes:</strong> ${briefData.step4?.cabinetType || 'No especificado'}</div>
@@ -144,16 +147,19 @@ INFORMACIÓN GENERAL:
 - Áreas a Trabajar: ${(briefData.step2?.areasToWork || []).join(', ') || 'No especificadas'}
 ${briefData.step2?.otherArea ? `- Otra Área: ${briefData.step2.otherArea}` : ''}
 
-REQUERIMIENTOS ESPECIALES:
-- Camilla(s): ${briefData.step3?.needsExamTable ? 'Sí' : 'No'}
-- Escritorio Médico: ${briefData.step3?.needsMedicalDesk ? 'Sí' : 'No'}
-- Mueble para Lavabo: ${briefData.step3?.needsSink ? 'Sí' : 'No'}
-- Sillas de Atención: ${briefData.step3?.needsChairs ? 'Sí' : 'No'}
-- Almacenamiento: ${briefData.step3?.needsStorage ? 'Sí' : 'No'}
-${briefData.step3?.otherElements ? `- Otros Elementos: ${briefData.step3.otherElements}` : ''}
+EQUIPO MÉDICO A CONSIDERAR:
+${briefData.step3?.medicalEquipment || 'No especificado'}
 
 PREFERENCIAS DE MOBILIARIO:
-- Tipo de Escritorio: ${briefData.step4?.deskType || 'No especificado'}
+- Tipo de Escritorio: ${
+  briefData.step4?.deskType === 'en_escuadra' ? 'En escuadra (esquinado)' :
+  briefData.step4?.deskType === 'en_l' ? 'En L' :
+  briefData.step4?.deskType === 'recto' ? 'Recto' :
+  briefData.step4?.deskType === 'giratorio' ? 'Giratorio' :
+  briefData.step4?.deskType === 'prefiero_propuesta' ? 'Prefiero que ustedes me propongan' :
+  briefData.step4?.deskType || 'No especificado'
+}
+${briefData.step4?.deskTypeSpecs ? `- Otras Especificaciones: ${briefData.step4.deskTypeSpecs}` : ''}
 - Tipo de Sillas: ${briefData.step4?.chairType || 'No especificado'}
 - Cantidad de Almacenamiento: ${briefData.step4?.storageAmount || 'No especificado'}
 - Tipo de Gabinetes: ${briefData.step4?.cabinetType || 'No especificado'}

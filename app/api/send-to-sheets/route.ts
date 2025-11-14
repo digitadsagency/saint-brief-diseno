@@ -28,16 +28,17 @@ function prepareDataForSheets(briefData: BrandBrief): string[] {
     (briefData.step2?.areasToWork || []).join(', '),
     briefData.step2?.otherArea || '',
     
-    // Paso 3 - Requerimientos especiales
-    briefData.step3?.needsExamTable ? 'Sí' : 'No',
-    briefData.step3?.needsMedicalDesk ? 'Sí' : 'No',
-    briefData.step3?.needsSink ? 'Sí' : 'No',
-    briefData.step3?.needsChairs ? 'Sí' : 'No',
-    briefData.step3?.needsStorage ? 'Sí' : 'No',
-    briefData.step3?.otherElements || '',
+    // Paso 3 - Equipo médico a considerar
+    briefData.step3?.medicalEquipment || '',
     
     // Paso 4 - Preferencias de mobiliario
+    briefData.step4?.deskType === 'en_escuadra' ? 'En escuadra (esquinado)' :
+    briefData.step4?.deskType === 'en_l' ? 'En L' :
+    briefData.step4?.deskType === 'recto' ? 'Recto' :
+    briefData.step4?.deskType === 'giratorio' ? 'Giratorio' :
+    briefData.step4?.deskType === 'prefiero_propuesta' ? 'Prefiero que ustedes me propongan' :
     briefData.step4?.deskType || '',
+    briefData.step4?.deskTypeSpecs || '',
     briefData.step4?.chairType || '',
     briefData.step4?.storageAmount || '',
     briefData.step4?.cabinetType || '',
@@ -105,7 +106,7 @@ export async function POST(request: NextRequest) {
     try {
       rangeResponse = await sheets.spreadsheets.values.get({
         spreadsheetId: GOOGLE_SHEETS_CONFIG.SPREADSHEET_ID,
-        range: `${GOOGLE_SHEETS_CONFIG.SHEET_NAME}!A1:AG1`,
+        range: `${GOOGLE_SHEETS_CONFIG.SHEET_NAME}!A1:AF1`,
       })
     } catch (error) {
       // Si la hoja no existe, crearla

@@ -132,15 +132,11 @@ export function createEmptyBrief(): BrandBrief {
       otherArea: ""
     },
     step3: {
-      needsExamTable: false,
-      needsMedicalDesk: false,
-      needsSink: false,
-      needsChairs: false,
-      needsStorage: false,
-      otherElements: ""
+      medicalEquipment: ""
     },
     step4: {
-      deskType: "",
+      deskType: "en_escuadra",
+      deskTypeSpecs: "",
       chairType: "",
       storageAmount: "",
       cabinetType: "",

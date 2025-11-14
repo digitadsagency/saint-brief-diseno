@@ -252,15 +252,11 @@ export function formatDataForPreview(data: BrandBrief, language: "es" | "en" = "
       otherArea: data.step2.otherArea
     },
     step3: {
-      needsExamTable: data.step3.needsExamTable,
-      needsMedicalDesk: data.step3.needsMedicalDesk,
-      needsSink: data.step3.needsSink,
-      needsChairs: data.step3.needsChairs,
-      needsStorage: data.step3.needsStorage,
-      otherElements: data.step3.otherElements
+      medicalEquipment: data.step3.medicalEquipment
     },
     step4: {
       deskType: data.step4.deskType,
+      deskTypeSpecs: data.step4.deskTypeSpecs,
       chairType: data.step4.chairType,
       storageAmount: data.step4.storageAmount,
       cabinetType: data.step4.cabinetType,
