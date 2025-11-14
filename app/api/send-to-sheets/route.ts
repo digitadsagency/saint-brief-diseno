@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
     try {
       rangeResponse = await sheets.spreadsheets.values.get({
         spreadsheetId: GOOGLE_SHEETS_CONFIG.SPREADSHEET_ID,
-        range: `${GOOGLE_SHEETS_CONFIG.SHEET_NAME}!A1:AF1`,
+        range: `${GOOGLE_SHEETS_CONFIG.SHEET_NAME}!A1:AB1`,
       })
     } catch (error) {
       // Si la hoja no existe, crearla
