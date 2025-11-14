@@ -29,10 +29,11 @@ export const furniturePreferencesSchema = z.object({
     errorMap: () => ({ message: "Debes seleccionar un tipo de escritorio" })
   }),
   deskTypeSpecs: z.string().optional(),
-  chairType: z.string().min(1, "El tipo de sillas es requerido"),
+  specifications: z.array(z.string()).optional(),
   storageAmount: z.string().min(1, "La cantidad de almacenamiento es requerida"),
-  cabinetType: z.string().min(1, "El tipo de gabinetes es requerido"),
-  furnitureHeight: z.string().min(1, "La altura o distribución es requerida"),
+  cabinetType: z.array(z.string()).min(1, "Debes seleccionar al menos un tipo de gabinete"),
+  cabinetTypeOther: z.string().optional(),
+  approximateHeight: z.string().min(1, "Tu altura aproximada es requerida"),
   elementsToKeep: z.string().optional()
 })
 
@@ -42,7 +43,6 @@ export const styleColorsSchema = z.object({
   otherStyle: z.string().optional(),
   mainColors: z.string().min(1, "Los colores principales son requeridos"),
   colorsToAvoid: z.string().optional(),
-  preferredMaterials: z.string().optional(),
   favoriteTextures: z.string().optional(),
   desiredPerception: z.string().min(1, "La percepción deseada es requerida"),
   inspirationExamples: z.string().optional(),
@@ -117,10 +117,11 @@ export const templateData: Partial<BrandBrief> = {
   step4: {
     deskType: "en_l",
     deskTypeSpecs: "Necesito un escritorio con privacidad, con cajones…",
-    chairType: "Sillas ergonómicas",
+    specifications: ["Almacenamiento cerca de mi escritorio", "Archivero o cajonera con llave"],
     storageAmount: "Moderado",
-    cabinetType: "Gabinetes colgantes",
-    furnitureHeight: "Altura estándar",
+    cabinetType: ["Colgante", "Cerrado"],
+    cabinetTypeOther: "",
+    approximateHeight: "1.70 m",
     elementsToKeep: ""
   },
   step5: {
@@ -128,7 +129,6 @@ export const templateData: Partial<BrandBrief> = {
     otherStyle: "",
     mainColors: "Blanco, gris, beige",
     colorsToAvoid: "Colores muy oscuros",
-    preferredMaterials: "Madera clara, mármol",
     favoriteTextures: "Mate, natural",
     desiredPerception: "Limpio, moderno, cálido",
     inspirationExamples: "https://pinterest.com/ejemplo",

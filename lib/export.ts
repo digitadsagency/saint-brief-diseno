@@ -257,10 +257,11 @@ export function formatDataForPreview(data: BrandBrief, language: "es" | "en" = "
     step4: {
       deskType: data.step4.deskType,
       deskTypeSpecs: data.step4.deskTypeSpecs,
-      chairType: data.step4.chairType,
+      specifications: data.step4.specifications,
       storageAmount: data.step4.storageAmount,
       cabinetType: data.step4.cabinetType,
-      furnitureHeight: data.step4.furnitureHeight,
+      cabinetTypeOther: data.step4.cabinetTypeOther,
+      approximateHeight: data.step4.approximateHeight,
       elementsToKeep: data.step4.elementsToKeep
     },
     step5: {
@@ -268,7 +269,6 @@ export function formatDataForPreview(data: BrandBrief, language: "es" | "en" = "
       otherStyle: data.step5.otherStyle,
       mainColors: data.step5.mainColors,
       colorsToAvoid: data.step5.colorsToAvoid,
-      preferredMaterials: data.step5.preferredMaterials,
       favoriteTextures: data.step5.favoriteTextures,
       desiredPerception: data.step5.desiredPerception,
       inspirationExamples: data.step5.inspirationExamples,

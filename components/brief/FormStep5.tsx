@@ -25,10 +25,10 @@ interface FormStep5Props {
 const styleOptions = [
   "Minimalista",
   "Contemporáneo",
-  "Industrial",
-  "Nórdico",
   "Cálido",
-  "luxury boutique"
+  "Nórdico",
+  "Luxury Boutique",
+  "Natural u orgánico"
 ]
 
 export default function FormStep5({ data, language, onSubmit, onNext, onBack }: FormStep5Props) {
@@ -38,7 +38,6 @@ export default function FormStep5({ data, language, onSubmit, onNext, onBack }: 
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors, isValid }
   } = useForm<StyleColors>({
     resolver: zodResolver(styleColorsSchema),
@@ -82,7 +81,7 @@ export default function FormStep5({ data, language, onSubmit, onNext, onBack }: 
             {/* Estilo deseado */}
             <div className="space-y-4">
               <Label className="text-base font-medium">
-                Estilo deseado *
+                Selecciona los estilos que te gusten: *
               </Label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {styleOptions.map((style) => (
@@ -102,7 +101,7 @@ export default function FormStep5({ data, language, onSubmit, onNext, onBack }: 
               {/* Otro estilo */}
               <div className="space-y-2">
                 <Label htmlFor="otherStyle" className="text-sm text-muted-foreground">
-                  Otro: (Tech medical, soft feminine, japandi…)
+                  Otro… Tecnológico, femenino, clínico…
                 </Label>
                 <Input
                   id="otherStyle"
@@ -142,19 +141,6 @@ export default function FormStep5({ data, language, onSubmit, onNext, onBack }: 
                 id="colorsToAvoid"
                 {...register("colorsToAvoid")}
                 placeholder="Ej: Colores muy oscuros, rojos intensos"
-                className="w-full"
-              />
-            </div>
-
-            {/* Materiales preferidos */}
-            <div className="space-y-2">
-              <Label htmlFor="preferredMaterials" className="text-base font-medium">
-                Materiales preferidos (opcional)
-              </Label>
-              <Input
-                id="preferredMaterials"
-                {...register("preferredMaterials")}
-                placeholder="Ej: Maderas claras, mármol, PVC, laminados, etc."
                 className="w-full"
               />
             </div>

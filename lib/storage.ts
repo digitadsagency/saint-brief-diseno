@@ -137,10 +137,11 @@ export function createEmptyBrief(): BrandBrief {
     step4: {
       deskType: "en_escuadra",
       deskTypeSpecs: "",
-      chairType: "",
+      specifications: [],
       storageAmount: "",
-      cabinetType: "",
-      furnitureHeight: "",
+      cabinetType: [],
+      cabinetTypeOther: "",
+      approximateHeight: "",
       elementsToKeep: ""
     },
     step5: {

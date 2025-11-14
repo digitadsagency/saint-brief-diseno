@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Sofa } from "lucide-react"
 import { furniturePreferencesSchema, type FurniturePreferences } from "@/lib/schemas"
 import { type Language, getTranslation } from "@/lib/i18n"
@@ -29,7 +30,32 @@ const deskTypeOptions = [
   { value: "prefiero_propuesta", label: "Prefiero que ustedes me propongan" }
 ]
 
+const specificationOptions = [
+  "Almacenamiento cerca de mi escritorio",
+  "Archivero o cajonera con llave",
+  "Display para productos",
+  "Basurero escondido",
+  "Espacio para frigobar",
+  "Espacio para destacar diplomas",
+  "Área de lavado con tarja médica",
+  "Iluminación regulable",
+  "Zona de café (en recepción)",
+  "Almacén de blancos",
+  "Espejo de cuerpo completo"
+]
+
+const cabinetTypeOptions = [
+  "Colgante",
+  "Abierto",
+  "Cerrado",
+  "Mixto"
+]
+
 export default function FormStep4({ data, language, onSubmit, onNext, onBack }: FormStep4Props) {
+  const [selectedSpecifications, setSelectedSpecifications] = React.useState<string[]>(data.specifications || [])
+  const [selectedCabinetTypes, setSelectedCabinetTypes] = React.useState<string[]>(data.cabinetType || [])
+  const [showCabinetOther, setShowCabinetOther] = React.useState(false)
+
   const {
     register,
     handleSubmit,
@@ -41,6 +67,41 @@ export default function FormStep4({ data, language, onSubmit, onNext, onBack }: 
     defaultValues: data,
     mode: "onChange"
   })
+
+  React.useEffect(() => {
+    setValue("specifications", selectedSpecifications, { shouldValidate: true })
+  }, [selectedSpecifications, setValue])
+
+  React.useEffect(() => {
+    setValue("cabinetType", selectedCabinetTypes, { shouldValidate: true })
+    setShowCabinetOther(selectedCabinetTypes.includes("Otro"))
+  }, [selectedCabinetTypes, setValue])
+
+  const toggleSpecification = (spec: string) => {
+    if (selectedSpecifications.includes(spec)) {
+      setSelectedSpecifications(prev => prev.filter(s => s !== spec))
+    } else {
+      setSelectedSpecifications(prev => [...prev, spec])
+    }
+  }
+
+  const toggleCabinetType = (type: string) => {
+    if (type === "Otro") {
+      if (selectedCabinetTypes.includes("Otro")) {
+        setSelectedCabinetTypes(prev => prev.filter(t => t !== "Otro"))
+        setShowCabinetOther(false)
+      } else {
+        setSelectedCabinetTypes(prev => [...prev, "Otro"])
+        setShowCabinetOther(true)
+      }
+    } else {
+      if (selectedCabinetTypes.includes(type)) {
+        setSelectedCabinetTypes(prev => prev.filter(t => t !== type))
+      } else {
+        setSelectedCabinetTypes(prev => [...prev, type])
+      }
+    }
+  }
 
   const onFormSubmit = (formData: FurniturePreferences) => {
     onSubmit(formData)
@@ -105,20 +166,25 @@ export default function FormStep4({ data, language, onSubmit, onNext, onBack }: 
               </div>
             </div>
 
-            {/* Tipo de sillas */}
-            <div className="space-y-2">
-              <Label htmlFor="chairType" className="text-base font-medium">
-                Tipo de sillas o bancas preferidas *
+            {/* Especificaciones */}
+            <div className="space-y-3">
+              <Label className="text-base font-medium">
+                ¿Necesitas alguna de estas especificaciones?
               </Label>
-              <Input
-                id="chairType"
-                {...register("chairType")}
-                placeholder="Ej: Sillas ergonómicas, bancas modernas"
-                className="w-full"
-              />
-              {errors.chairType && (
-                <p className="text-sm text-red-500">{errors.chairType.message}</p>
-              )}
+              <div className="space-y-2">
+                {specificationOptions.map((spec) => (
+                  <div key={spec} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={spec}
+                      checked={selectedSpecifications.includes(spec)}
+                      onCheckedChange={() => toggleSpecification(spec)}
+                    />
+                    <Label htmlFor={spec} className="font-normal cursor-pointer">
+                      {spec}
+                    </Label>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Almacenamiento */}
@@ -138,34 +204,61 @@ export default function FormStep4({ data, language, onSubmit, onNext, onBack }: 
             </div>
 
             {/* Tipo de gabinetes */}
-            <div className="space-y-2">
-              <Label htmlFor="cabinetType" className="text-base font-medium">
-                Tipo de gabinetes o mobiliario mural (colgante, cerrado, abierto) *
+            <div className="space-y-3">
+              <Label className="text-base font-medium">
+                Tipo de gabinetes o mobiliario mural *
               </Label>
-              <Input
-                id="cabinetType"
-                {...register("cabinetType")}
-                placeholder="Ej: Gabinetes colgantes, cerrados"
-                className="w-full"
-              />
+              <div className="space-y-2">
+                {cabinetTypeOptions.map((type) => (
+                  <div key={type} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={type}
+                      checked={selectedCabinetTypes.includes(type)}
+                      onCheckedChange={() => toggleCabinetType(type)}
+                    />
+                    <Label htmlFor={type} className="font-normal cursor-pointer">
+                      {type}
+                    </Label>
+                  </div>
+                ))}
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="cabinet-otro"
+                    checked={selectedCabinetTypes.includes("Otro")}
+                    onCheckedChange={() => toggleCabinetType("Otro")}
+                  />
+                  <Label htmlFor="cabinet-otro" className="font-normal cursor-pointer">
+                    Otro
+                  </Label>
+                </div>
+              </div>
+              {showCabinetOther && (
+                <div className="mt-2">
+                  <Input
+                    {...register("cabinetTypeOther")}
+                    placeholder="Especifica otro tipo"
+                    className="w-full"
+                  />
+                </div>
+              )}
               {errors.cabinetType && (
                 <p className="text-sm text-red-500">{errors.cabinetType.message}</p>
               )}
             </div>
 
-            {/* Altura o distribución */}
+            {/* Altura aproximada */}
             <div className="space-y-2">
-              <Label htmlFor="furnitureHeight" className="text-base font-medium">
-                Altura o distribución preferida de los muebles (te puedes basar en tu altura) *
+              <Label htmlFor="approximateHeight" className="text-base font-medium">
+                Para personalizar la ergonomía del consultorio, ¿cuál es tu altura aproximada? *
               </Label>
               <Input
-                id="furnitureHeight"
-                {...register("furnitureHeight")}
-                placeholder="Ej: Altura estándar, distribución ergonómica"
+                id="approximateHeight"
+                {...register("approximateHeight")}
+                placeholder="Ej: 1.70 m, 1.65 m"
                 className="w-full"
               />
-              {errors.furnitureHeight && (
-                <p className="text-sm text-red-500">{errors.furnitureHeight.message}</p>
+              {errors.approximateHeight && (
+                <p className="text-sm text-red-500">{errors.approximateHeight.message}</p>
               )}
             </div>
 

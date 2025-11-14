@@ -85,10 +85,10 @@ function createEmailHTML(briefData: BrandBrief): string {
             briefData.step4?.deskType || 'No especificado'
           }</div>
           ${briefData.step4?.deskTypeSpecs ? `<div class="field"><strong>Otras Especificaciones:</strong> ${briefData.step4.deskTypeSpecs}</div>` : ''}
-          <div class="field"><strong>Tipo de Sillas:</strong> ${briefData.step4?.chairType || 'No especificado'}</div>
+          ${(briefData.step4?.specifications || []).length > 0 ? `<div class="field"><strong>Especificaciones:</strong> ${(briefData.step4.specifications || []).join(', ')}</div>` : ''}
           <div class="field"><strong>Cantidad de Almacenamiento:</strong> ${briefData.step4?.storageAmount || 'No especificado'}</div>
-          <div class="field"><strong>Tipo de Gabinetes:</strong> ${briefData.step4?.cabinetType || 'No especificado'}</div>
-          <div class="field"><strong>Altura o Distribución:</strong> ${briefData.step4?.furnitureHeight || 'No especificado'}</div>
+          <div class="field"><strong>Tipo de Gabinetes:</strong> ${(briefData.step4?.cabinetType || []).join(', ') || 'No especificado'}${briefData.step4?.cabinetTypeOther ? ` (${briefData.step4.cabinetTypeOther})` : ''}</div>
+          <div class="field"><strong>Altura Aproximada:</strong> ${briefData.step4?.approximateHeight || 'No especificado'}</div>
           ${briefData.step4?.elementsToKeep ? `<div class="field"><strong>Elementos a Conservar:</strong> ${briefData.step4.elementsToKeep}</div>` : ''}
         </div>
 
@@ -98,7 +98,6 @@ function createEmailHTML(briefData: BrandBrief): string {
           ${briefData.step5?.otherStyle ? `<div class="field"><strong>Otro Estilo:</strong> ${briefData.step5.otherStyle}</div>` : ''}
           <div class="field"><strong>Colores Principales:</strong> ${briefData.step5?.mainColors || 'No especificados'}</div>
           ${briefData.step5?.colorsToAvoid ? `<div class="field"><strong>Colores a Evitar:</strong> ${briefData.step5.colorsToAvoid}</div>` : ''}
-          ${briefData.step5?.preferredMaterials ? `<div class="field"><strong>Materiales Preferidos:</strong> ${briefData.step5.preferredMaterials}</div>` : ''}
           ${briefData.step5?.favoriteTextures ? `<div class="field"><strong>Texturas Favoritas:</strong> ${briefData.step5.favoriteTextures}</div>` : ''}
           <div class="field"><strong>Percepción Deseada:</strong> ${briefData.step5?.desiredPerception || 'No especificada'}</div>
           ${briefData.step5?.inspirationExamples ? `<div class="field"><strong>Ejemplos de Inspiración:</strong> ${briefData.step5.inspirationExamples}</div>` : ''}
@@ -160,10 +159,10 @@ PREFERENCIAS DE MOBILIARIO:
   briefData.step4?.deskType || 'No especificado'
 }
 ${briefData.step4?.deskTypeSpecs ? `- Otras Especificaciones: ${briefData.step4.deskTypeSpecs}` : ''}
-- Tipo de Sillas: ${briefData.step4?.chairType || 'No especificado'}
+${(briefData.step4?.specifications || []).length > 0 ? `- Especificaciones: ${(briefData.step4.specifications || []).join(', ')}` : ''}
 - Cantidad de Almacenamiento: ${briefData.step4?.storageAmount || 'No especificado'}
-- Tipo de Gabinetes: ${briefData.step4?.cabinetType || 'No especificado'}
-- Altura o Distribución: ${briefData.step4?.furnitureHeight || 'No especificado'}
+- Tipo de Gabinetes: ${(briefData.step4?.cabinetType || []).join(', ') || 'No especificado'}${briefData.step4?.cabinetTypeOther ? ` (${briefData.step4.cabinetTypeOther})` : ''}
+- Altura Aproximada: ${briefData.step4?.approximateHeight || 'No especificado'}
 ${briefData.step4?.elementsToKeep ? `- Elementos a Conservar: ${briefData.step4.elementsToKeep}` : ''}
 
 ESTILO, COLORES Y PERCEPCIÓN:
@@ -171,7 +170,6 @@ ESTILO, COLORES Y PERCEPCIÓN:
 ${briefData.step5?.otherStyle ? `- Otro Estilo: ${briefData.step5.otherStyle}` : ''}
 - Colores Principales: ${briefData.step5?.mainColors || 'No especificados'}
 ${briefData.step5?.colorsToAvoid ? `- Colores a Evitar: ${briefData.step5.colorsToAvoid}` : ''}
-${briefData.step5?.preferredMaterials ? `- Materiales Preferidos: ${briefData.step5.preferredMaterials}` : ''}
 ${briefData.step5?.favoriteTextures ? `- Texturas Favoritas: ${briefData.step5.favoriteTextures}` : ''}
 - Percepción Deseada: ${briefData.step5?.desiredPerception || 'No especificada'}
 ${briefData.step5?.inspirationExamples ? `- Ejemplos de Inspiración: ${briefData.step5.inspirationExamples}` : ''}

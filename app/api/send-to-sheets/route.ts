@@ -39,10 +39,11 @@ function prepareDataForSheets(briefData: BrandBrief): string[] {
     briefData.step4?.deskType === 'prefiero_propuesta' ? 'Prefiero que ustedes me propongan' :
     briefData.step4?.deskType || '',
     briefData.step4?.deskTypeSpecs || '',
-    briefData.step4?.chairType || '',
+    (briefData.step4?.specifications || []).join(', '),
     briefData.step4?.storageAmount || '',
-    briefData.step4?.cabinetType || '',
-    briefData.step4?.furnitureHeight || '',
+    (briefData.step4?.cabinetType || []).join(', '),
+    briefData.step4?.cabinetTypeOther || '',
+    briefData.step4?.approximateHeight || '',
     briefData.step4?.elementsToKeep || '',
     
     // Paso 5 - Estilo, colores y percepción
