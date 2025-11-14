@@ -161,12 +161,13 @@ export default function FormStep5({ data, language, onSubmit, onNext, onBack }: 
             {/* Percepción deseada */}
             <div className="space-y-2">
               <Label htmlFor="desiredPerception" className="text-base font-medium">
-                Percepción deseada del espacio *
+                Cuando un paciente entra a tu consultorio, ¿quieres que sienta que está en un entorno médico profesional o en un espacio más cálido (como spa, boutique, hotel, etc.)? *
               </Label>
-              <Input
+              <Textarea
                 id="desiredPerception"
                 {...register("desiredPerception")}
-                placeholder="Ej: Limpio, tecnológico, cálido, profesional, elegante, relajante, natural, moderno, etc."
+                placeholder="Describe la percepción que quieres que tenga el paciente..."
+                rows={3}
                 className="w-full"
               />
               {errors.desiredPerception && (

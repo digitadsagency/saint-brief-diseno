@@ -53,14 +53,14 @@ export const styleColorsSchema = z.object({
 export const lightingSchema = z.object({
   lightingPreference: z.enum(["warm", "neutral", "cold"], {
     errorMap: () => ({ message: "Debes seleccionar una preferencia de iluminación" })
-  })
+  }),
+  needsFocalLighting: z.boolean().default(false),
+  focalLightingArea: z.string().optional()
 })
 
 // Paso 7 - Presupuesto y alcance
 export const budgetSchema = z.object({
-  budgetRange: z.enum(["120-180k", "180-250k", "250-330k", "330k+"], {
-    errorMap: () => ({ message: "Debes seleccionar un rango de presupuesto" })
-  })
+  budgetRange: z.string().min(1, "El rango de inversión es requerido")
 })
 
 // Esquema maestro
@@ -135,9 +135,11 @@ export const templateData: Partial<BrandBrief> = {
     logoOrIdentity: ""
   },
   step6: {
-    lightingPreference: "neutral"
+    lightingPreference: "neutral",
+    needsFocalLighting: true,
+    focalLightingArea: "Consultorio"
   },
   step7: {
-    budgetRange: "180-250k"
+    budgetRange: "Entre $200,000 y $300,000 MXN"
   }
 }

@@ -275,7 +275,9 @@ export function formatDataForPreview(data: BrandBrief, language: "es" | "en" = "
       logoOrIdentity: data.step5.logoOrIdentity
     },
     step6: {
-      lightingPreference: data.step6.lightingPreference
+      lightingPreference: data.step6.lightingPreference,
+      needsFocalLighting: data.step6.needsFocalLighting,
+      focalLightingArea: data.step6.focalLightingArea
     },
     step7: {
       budgetRange: data.step7.budgetRange

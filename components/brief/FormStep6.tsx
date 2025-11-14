@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Lightbulb } from "lucide-react"
 import { lightingSchema, type Lighting } from "@/lib/schemas"
@@ -20,16 +21,26 @@ interface FormStep6Props {
 }
 
 export default function FormStep6({ data, language, onSubmit, onNext, onBack }: FormStep6Props) {
+  const [needsFocalLighting, setNeedsFocalLighting] = React.useState(data.needsFocalLighting || false)
+
   const {
+    register,
     handleSubmit,
     setValue,
     watch,
     formState: { errors, isValid }
   } = useForm<Lighting>({
     resolver: zodResolver(lightingSchema),
-    defaultValues: data,
+    defaultValues: {
+      ...data,
+      needsFocalLighting: data.needsFocalLighting || false
+    },
     mode: "onChange"
   })
+
+  React.useEffect(() => {
+    setValue("needsFocalLighting", needsFocalLighting, { shouldValidate: true })
+  }, [needsFocalLighting, setValue])
 
   const onFormSubmit = (formData: Lighting) => {
     onSubmit(formData)
@@ -100,6 +111,55 @@ export default function FormStep6({ data, language, onSubmit, onNext, onBack }: 
               </div>
               {errors.lightingPreference && (
                 <p className="text-sm text-red-500">{errors.lightingPreference.message}</p>
+              )}
+            </div>
+
+            {/* Iluminación focal */}
+            <div className="space-y-3">
+              <Label className="text-base font-medium">
+                ¿Necesitas iluminación focal? (Spotlights o lámpara para iluminar algo específico)
+              </Label>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="focal-yes"
+                    name="needsFocalLighting"
+                    checked={needsFocalLighting === true}
+                    onChange={() => setNeedsFocalLighting(true)}
+                    className="rounded"
+                  />
+                  <Label htmlFor="focal-yes" className="font-normal cursor-pointer">
+                    Sí
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="focal-no"
+                    name="needsFocalLighting"
+                    checked={needsFocalLighting === false}
+                    onChange={() => setNeedsFocalLighting(false)}
+                    className="rounded"
+                  />
+                  <Label htmlFor="focal-no" className="font-normal cursor-pointer">
+                    No
+                  </Label>
+                </div>
+              </div>
+
+              {needsFocalLighting && (
+                <div className="space-y-2 mt-2">
+                  <Label htmlFor="focalLightingArea" className="text-base font-medium">
+                    ¿En qué área? *
+                  </Label>
+                  <Input
+                    id="focalLightingArea"
+                    {...register("focalLightingArea")}
+                    placeholder="Ej: Consultorio, área de procedimientos, recepción..."
+                    className="w-full"
+                  />
+                </div>
               )}
             </div>
 

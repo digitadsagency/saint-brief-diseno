@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { Send, CheckCircle } from "lucide-react"
 import { budgetSchema, type Budget, type BrandBrief } from "@/lib/schemas"
 import { type Language, getTranslation } from "@/lib/i18n"
@@ -28,9 +29,8 @@ export default function FormStep7({ data, briefData, language, onSubmit, onNext,
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   const {
+    register,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors, isValid }
   } = useForm<Budget>({
     resolver: zodResolver(budgetSchema),
@@ -126,68 +126,28 @@ export default function FormStep7({ data, briefData, language, onSubmit, onNext,
         </CardHeader>
         <CardContent className="pt-8">
           <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
-            {/* Rango de presupuesto */}
+            {/* Rango de inversión */}
             <div className="space-y-2">
-              <Label className="text-base font-medium">
-                Rango estimado de inversión *
+              <Label htmlFor="budgetRange" className="text-base font-medium">
+                ¿Cuál es el rango de inversión que planeas hacer? *
               </Label>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    id="120-180k"
-                    value="120-180k"
-                    checked={watch("budgetRange") === "120-180k"}
-                    onChange={(e) => setValue("budgetRange", "120-180k" as any)}
-                    className="rounded"
-                  />
-                  <Label htmlFor="120-180k" className="font-normal cursor-pointer">
-                    $120,000 – $180,000
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    id="180-250k"
-                    value="180-250k"
-                    checked={watch("budgetRange") === "180-250k"}
-                    onChange={(e) => setValue("budgetRange", "180-250k" as any)}
-                    className="rounded"
-                  />
-                  <Label htmlFor="180-250k" className="font-normal cursor-pointer">
-                    $180,000 – $250,000
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    id="250-330k"
-                    value="250-330k"
-                    checked={watch("budgetRange") === "250-330k"}
-                    onChange={(e) => setValue("budgetRange", "250-330k" as any)}
-                    className="rounded"
-                  />
-                  <Label htmlFor="250-330k" className="font-normal cursor-pointer">
-                    $250,000 – $330,000
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    id="330k+"
-                    value="330k+"
-                    checked={watch("budgetRange") === "330k+"}
-                    onChange={(e) => setValue("budgetRange", "330k+" as any)}
-                    className="rounded"
-                  />
-                  <Label htmlFor="330k+" className="font-normal cursor-pointer">
-                    +$330,000
-                  </Label>
-                </div>
-              </div>
+              <Textarea
+                id="budgetRange"
+                {...register("budgetRange")}
+                placeholder="Ej: Entre $200,000 y $300,000 MXN"
+                rows={3}
+                className="w-full"
+              />
               {errors.budgetRange && (
                 <p className="text-sm text-red-500">{errors.budgetRange.message}</p>
               )}
+            </div>
+
+            {/* Disclaimer */}
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <p className="text-sm text-gray-700">
+                <strong>*</strong> Trabajaremos dentro del presupuesto establecido; sin embargo, el costo final puede fluctuar hasta un 15% dependiendo de los materiales seleccionados y los ajustes del diseño.
+              </p>
             </div>
 
             {/* Botones de Navegación */}

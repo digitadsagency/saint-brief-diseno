@@ -50,7 +50,9 @@ export function PreviewPane({ data, language }: PreviewPaneProps) {
         logoOrIdentity: data.step5.logoOrIdentity
       },
       step6: {
-        lightingPreference: data.step6.lightingPreference
+        lightingPreference: data.step6.lightingPreference,
+        needsFocalLighting: data.step6.needsFocalLighting,
+        focalLightingArea: data.step6.focalLightingArea
       },
       step7: {
         budgetRange: data.step7.budgetRange
@@ -144,12 +146,7 @@ export function PreviewPane({ data, language }: PreviewPaneProps) {
           <div className="space-y-2">
             <h4 className="font-semibold text-sm text-gray-700">Presupuesto</h4>
             <p className="text-sm">
-              <strong>Rango:</strong> {
-                previewData.step7.budgetRange === '120-180k' ? '$120,000 – $180,000' :
-                previewData.step7.budgetRange === '180-250k' ? '$180,000 – $250,000' :
-                previewData.step7.budgetRange === '250-330k' ? '$250,000 – $330,000' :
-                previewData.step7.budgetRange === '330k+' ? '+$330,000' : previewData.step7.budgetRange
-              }
+              <strong>Rango de Inversión:</strong> {previewData.step7.budgetRange}
             </p>
           </div>
         )}

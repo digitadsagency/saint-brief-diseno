@@ -57,7 +57,12 @@ function prepareDataForSheets(briefData: BrandBrief): string[] {
     briefData.step5?.logoOrIdentity || '',
     
     // Paso 6 - Iluminación deseada
+    briefData.step6?.lightingPreference === 'warm' ? 'Luz cálida' :
+    briefData.step6?.lightingPreference === 'neutral' ? 'Luz neutra' :
+    briefData.step6?.lightingPreference === 'cold' ? 'Luz fría' :
     briefData.step6?.lightingPreference || '',
+    briefData.step6?.needsFocalLighting ? 'Sí' : 'No',
+    briefData.step6?.focalLightingArea || '',
     
     // Paso 7 - Presupuesto y alcance
     briefData.step7?.budgetRange || ''
@@ -106,7 +111,7 @@ export async function POST(request: NextRequest) {
     try {
       rangeResponse = await sheets.spreadsheets.values.get({
         spreadsheetId: GOOGLE_SHEETS_CONFIG.SPREADSHEET_ID,
-        range: `${GOOGLE_SHEETS_CONFIG.SHEET_NAME}!A1:AB1`,
+        range: `${GOOGLE_SHEETS_CONFIG.SHEET_NAME}!A1:AD1`,
       })
     } catch (error) {
       // Si la hoja no existe, crearla

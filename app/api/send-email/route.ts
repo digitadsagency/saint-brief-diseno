@@ -107,11 +107,13 @@ function createEmailHTML(briefData: BrandBrief): string {
         <div class="section">
           <h2>ILUMINACIÓN DESEADA</h2>
           <div class="field"><strong>Preferencia:</strong> ${briefData.step6?.lightingPreference === 'warm' ? 'Luz cálida' : briefData.step6?.lightingPreference === 'neutral' ? 'Luz neutra' : briefData.step6?.lightingPreference === 'cold' ? 'Luz fría' : 'No especificada'}</div>
+          <div class="field"><strong>¿Necesita Iluminación Focal?</strong> ${briefData.step6?.needsFocalLighting ? 'Sí' : 'No'}</div>
+          ${briefData.step6?.focalLightingArea ? `<div class="field"><strong>¿En qué área?</strong> ${briefData.step6.focalLightingArea}</div>` : ''}
         </div>
 
         <div class="section">
           <h2>PRESUPUESTO Y ALCANCE</h2>
-          <div class="field"><strong>Rango de Presupuesto:</strong> ${briefData.step7?.budgetRange === '120-180k' ? '$120,000 – $180,000' : briefData.step7?.budgetRange === '180-250k' ? '$180,000 – $250,000' : briefData.step7?.budgetRange === '250-330k' ? '$250,000 – $330,000' : briefData.step7?.budgetRange === '330k+' ? '+$330,000' : 'No especificado'}</div>
+          <div class="field"><strong>Rango de Inversión:</strong> ${briefData.step7?.budgetRange || 'No especificado'}</div>
         </div>
 
         <div class="footer">
@@ -177,9 +179,11 @@ ${briefData.step5?.logoOrIdentity ? `- Logo o Identidad: ${briefData.step5.logoO
 
 ILUMINACIÓN DESEADA:
 - Preferencia: ${briefData.step6?.lightingPreference === 'warm' ? 'Luz cálida' : briefData.step6?.lightingPreference === 'neutral' ? 'Luz neutra' : briefData.step6?.lightingPreference === 'cold' ? 'Luz fría' : 'No especificada'}
+- ¿Necesita Iluminación Focal? ${briefData.step6?.needsFocalLighting ? 'Sí' : 'No'}
+${briefData.step6?.focalLightingArea ? `- ¿En qué área? ${briefData.step6.focalLightingArea}` : ''}
 
 PRESUPUESTO Y ALCANCE:
-- Rango de Presupuesto: ${briefData.step7?.budgetRange === '120-180k' ? '$120,000 – $180,000' : briefData.step7?.budgetRange === '180-250k' ? '$180,000 – $250,000' : briefData.step7?.budgetRange === '250-330k' ? '$250,000 – $330,000' : briefData.step7?.budgetRange === '330k+' ? '+$330,000' : 'No especificado'}
+- Rango de Inversión: ${briefData.step7?.budgetRange || 'No especificado'}
 
 ---
 SAINT Agency - Brief Creativo de Diseño de Interiores

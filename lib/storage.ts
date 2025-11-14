@@ -156,10 +156,12 @@ export function createEmptyBrief(): BrandBrief {
       logoOrIdentity: ""
     },
     step6: {
-      lightingPreference: "neutral"
+      lightingPreference: "neutral",
+      needsFocalLighting: false,
+      focalLightingArea: ""
     },
     step7: {
-      budgetRange: "120-180k"
+      budgetRange: ""
     },
     status: "draft"
   }

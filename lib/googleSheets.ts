@@ -69,6 +69,8 @@ export function getSheetHeaders(): string[] {
     'Ejemplos de Inspiración',
     'Logo o Identidad',
     'Preferencia de Iluminación',
-    'Rango de Presupuesto'
+    'Necesita Iluminación Focal',
+    'Área de Iluminación Focal',
+    'Rango de Inversión'
   ]
 }
